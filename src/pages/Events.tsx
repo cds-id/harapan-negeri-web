@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Calendar, MapPin, Clock, Users, ArrowRight, Heart, BookOpen, Award, TrendingUp, CheckCircle, Star } from "lucide-react";
 import { Link } from "react-router-dom";
+import PageBlank from "@/components/PageBlank";
 
 const Events = () => {
   const upcomingEvents = [
@@ -133,20 +134,15 @@ const Events = () => {
   };
 
   return (
-    <div className="py-12">
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Acara & Kegiatan
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Ikuti berbagai acara dan kegiatan yang diselenggarakan Yayasan Harapan Bagimu Negeri untuk membangun Indonesia yang lebih baik
-          </p>
-          <Badge variant="outline" className="text-lg px-6 py-2 border-primary text-primary">
-            3 Event Mendatang
-          </Badge>
-        </div>
+    <PageBlank
+      title="Acara & Kegiatan"
+      description="Ikuti berbagai acara dan kegiatan yang diselenggarakan Yayasan Harapan Bagimu Negeri untuk membangun Indonesia yang lebih baik"
+    >
+      <div className="text-center mb-16">
+        <Badge variant="outline" className="text-lg px-6 py-2 border-primary text-primary">
+          3 Event Mendatang
+        </Badge>
+      </div>
 
         {/* Event Stats */}
         <section className="mb-16">
@@ -288,16 +284,16 @@ const Events = () => {
                           {event.status}
                         </Badge>
                       </div>
-                      
+
                       <CardTitle className="text-xl line-clamp-2">
                         {event.title}
                       </CardTitle>
-                      
+
                       <CardDescription className="line-clamp-2">
                         {event.description}
                       </CardDescription>
                     </CardHeader>
-                    
+
                     <CardContent>
                       <div className="space-y-3 text-sm text-muted-foreground mb-4">
                         <div className="flex items-center">
@@ -313,7 +309,7 @@ const Events = () => {
                           {event.participants}
                         </div>
                       </div>
-                      
+
                       <div className="bg-light-gray p-3 rounded-lg">
                         <p className="text-sm font-medium text-success">Dampak:</p>
                         <p className="text-sm text-muted-foreground">{event.impact}</p>
@@ -377,8 +373,7 @@ const Events = () => {
             </CardContent>
           </Card>
         </section>
-      </div>
-    </div>
+    </PageBlank>
   );
 };
 

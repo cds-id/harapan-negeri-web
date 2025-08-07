@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Phone, Mail, MapPin, Clock, Send, MessageCircle, Users, Heart } from "lucide-react";
+import PageBlank from "@/components/PageBlank";
 
 const Contact = () => {
   const contactInfo = [
@@ -56,17 +57,10 @@ const Contact = () => {
   ];
 
   return (
-    <div className="py-12">
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Kontak Kami
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Hubungi kami untuk informasi lebih lanjut, berkolaborasi, atau bergabung dalam misi membangun Indonesia yang lebih baik
-          </p>
-        </div>
+    <PageBlank
+      title="Kontak Kami"
+      description="Hubungi kami untuk informasi lebih lanjut, berkolaborasi, atau bergabung dalam misi membangun Indonesia yang lebih baik"
+    >
 
         {/* Contact Information */}
         <section className="mb-16">
@@ -114,31 +108,31 @@ const Contact = () => {
                       <Input id="lastName" placeholder="Masukkan nama belakang" />
                     </div>
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="email">Email</Label>
                     <Input id="email" type="email" placeholder="nama@email.com" />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="phone">Nomor Telepon</Label>
                     <Input id="phone" type="tel" placeholder="08xx xxxx xxxx" />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="subject">Subjek</Label>
                     <Input id="subject" placeholder="Subjek pesan Anda" />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="message">Pesan</Label>
-                    <Textarea 
-                      id="message" 
+                    <Textarea
+                      id="message"
                       placeholder="Tulis pesan Anda di sini..."
                       className="min-h-[120px]"
                     />
                   </div>
-                  
+
                   <Button type="submit" size="lg" className="w-full">
                     <Send className="mr-2 h-5 w-5" />
                     Kirim Pesan
@@ -167,7 +161,7 @@ const Contact = () => {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-3">
                     <div className="flex items-center">
                       <MapPin className="h-5 w-5 text-primary mr-3" />
@@ -178,7 +172,7 @@ const Contact = () => {
                         </p>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center">
                       <Phone className="h-5 w-5 text-primary mr-3" />
                       <div>
@@ -186,7 +180,7 @@ const Contact = () => {
                         <p className="text-sm text-muted-foreground">0812 8008 0600</p>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center">
                       <Clock className="h-5 w-5 text-primary mr-3" />
                       <div>
@@ -318,8 +312,7 @@ const Contact = () => {
             </CardContent>
           </Card>
         </section>
-      </div>
-    </div>
+    </PageBlank>
   );
 };
 

@@ -48,7 +48,7 @@ const Home = () => {
     {
       title: "Pelatihan Digital Marketing",
       excerpt: "50 peserta mengikuti pelatihan digital marketing gratis untuk UMKM",
-      date: "10 Maret 2024", 
+      date: "10 Maret 2024",
       location: "Bogor"
     },
     {
@@ -93,9 +93,9 @@ const Home = () => {
             {/* Hero Image */}
             <div className="relative">
               <div className="relative overflow-hidden rounded-2xl shadow-strong">
-                <img 
-                  src={heroImage} 
-                  alt="Anak-anak Indonesia yang bahagia belajar bersama" 
+                <img
+                  src={heroImage}
+                  alt="Anak-anak Indonesia yang bahagia belajar bersama"
                   className="w-full h-[500px] lg:h-[600px] object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
@@ -119,7 +119,7 @@ const Home = () => {
               Pencapaian yang telah kami raih bersama masyarakat Indonesia
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {stats.map((stat, index) => {
               const Icon = stat.icon;
@@ -241,7 +241,7 @@ const Home = () => {
                 <Heart className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8 py-6 border-white/30 text-white hover:bg-white/10" asChild>
+            <Button size="lg" variant="outline" className="text-lg px-8 py-6 border-white/30 text-primary hover:text-white hover:bg-white/10" asChild>
               <Link to="/contact">
                 Hubungi Kami
                 <ArrowRight className="ml-2 h-5 w-5" />

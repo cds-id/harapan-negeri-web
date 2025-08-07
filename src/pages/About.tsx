@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Heart, Users, Target, BookOpen, Award, TrendingUp, Eye, Lightbulb, Shield, Handshake, CheckCircle, Building2, FileText, Phone, MapPin } from "lucide-react";
+import PageBlank from "@/components/PageBlank";
 
 const About = () => {
   const coreValues = [
@@ -12,7 +13,7 @@ const About = () => {
       color: "bg-primary"
     },
     {
-      title: "Transparansi", 
+      title: "Transparansi",
       description: "Mengelola dana dan program secara terbuka",
       icon: Eye,
       color: "bg-info"
@@ -75,20 +76,15 @@ const About = () => {
   ];
 
   return (
-    <div className="py-12">
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Tentang Kami
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Mengenal lebih dekat Yayasan Harapan Bagimu Negeri dan komitmen kami untuk membangun masa depan Indonesia yang lebih baik
-          </p>
-          <Badge variant="outline" className="text-lg px-6 py-2 border-primary text-primary">
-            Lembaga Non Profit
-          </Badge>
-        </div>
+    <PageBlank
+      title="Tentang Kami"
+      description="Mengenal lebih dekat Yayasan Harapan Bagimu Negeri dan komitmen kami untuk membangun masa depan Indonesia yang lebih baik"
+    >
+      <div className="text-center mb-16">
+        <Badge variant="outline" className="text-lg px-6 py-2 border-primary text-primary">
+          Lembaga Non Profit
+        </Badge>
+      </div>
 
         {/* Organization Info */}
         <section className="mb-16">
@@ -124,7 +120,7 @@ const About = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">Visi & Misi</h2>
           </div>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Vision */}
             <Card className="border-0 shadow-soft">
@@ -350,8 +346,7 @@ const About = () => {
             </Card>
           </div>
         </section>
-      </div>
-    </div>
+    </PageBlank>
   );
 };
 

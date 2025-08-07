@@ -5,6 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Heart, Target, Users, Calendar, MapPin, ArrowRight, CheckCircle, Clock, TrendingUp, Gift, BookOpen, Award } from "lucide-react";
 import { Link } from "react-router-dom";
+import PageBlank from "@/components/PageBlank";
 
 const Campaigns = () => {
   const activeCampaigns = [
@@ -148,20 +149,15 @@ const Campaigns = () => {
   };
 
   return (
-    <div className="py-12">
-      <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Kampanye Penggalangan Dana
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Bergabunglah dengan ribuan donatur lainnya untuk menciptakan perubahan nyata bagi masyarakat Indonesia yang membutuhkan
-          </p>
-          <Badge variant="outline" className="text-lg px-6 py-2 border-primary text-primary">
-            3 Kampanye Aktif
-          </Badge>
-        </div>
+    <PageBlank
+      title="Kampanye Penggalangan Dana"
+      description="Bergabunglah dengan ribuan donatur lainnya untuk menciptakan perubahan nyata bagi masyarakat Indonesia yang membutuhkan"
+    >
+      <div className="text-center mb-16">
+        <Badge variant="outline" className="text-lg px-6 py-2 border-primary text-primary">
+          3 Kampanye Aktif
+        </Badge>
+      </div>
 
         {/* Campaign Stats */}
         <section className="mb-16">
@@ -320,16 +316,16 @@ const Campaigns = () => {
                         </Badge>
                         <span className="text-sm text-muted-foreground">{campaign.completedDate}</span>
                       </div>
-                      
+
                       <CardTitle className="text-xl line-clamp-2">
                         {campaign.title}
                       </CardTitle>
-                      
+
                       <CardDescription className="line-clamp-2">
                         {campaign.description}
                       </CardDescription>
                     </CardHeader>
-                    
+
                     <CardContent>
                       {/* Progress */}
                       <div className="mb-4">
@@ -354,7 +350,7 @@ const Campaigns = () => {
                           {campaign.donors} donatur
                         </div>
                       </div>
-                      
+
                       <div className="bg-light-gray p-3 rounded-lg">
                         <p className="text-sm font-medium text-success">Dampak:</p>
                         <p className="text-sm text-muted-foreground">{campaign.impact}</p>
@@ -452,8 +448,7 @@ const Campaigns = () => {
             </CardContent>
           </Card>
         </section>
-      </div>
-    </div>
+    </PageBlank>
   );
 };
 

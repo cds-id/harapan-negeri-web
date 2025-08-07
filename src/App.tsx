@@ -7,12 +7,12 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Programs from "./pages/Programs";
-import Donate from "./pages/Donate";
 import Events from "./pages/Events";
 import GetInvolved from "./pages/GetInvolved";
 import News from "./pages/News";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import Donate from "./pages/Donate";
 
 const queryClient = new QueryClient();
 
