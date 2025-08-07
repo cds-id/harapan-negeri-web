@@ -62,37 +62,48 @@ const Home = () => {
   return (
     <div className="space-y-0">
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img 
-            src={heroImage} 
-            alt="Anak-anak Indonesia yang bahagia" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-hero-gradient"></div>
-        </div>
-        
-        <div className="relative z-10 container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            Bersama Kita Peduli,<br />
-            <span className="text-primary-glow">Bersama Kita Berbagi</span>
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed opacity-90">
-            Membangun masa depan bangsa dengan kasih dan kepedulian tanpa batas untuk seluruh anak negeri
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button size="lg" className="text-lg px-8 py-6 shadow-colored" asChild>
-              <Link to="/get-involved">
-                Donasi Sekarang
-                <Heart className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8 py-6 bg-white/10 border-white/30 text-white hover:bg-white/20" asChild>
-              <Link to="/get-involved">
-                Menjadi Relawan
-                <Users className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
+      <section className="py-16 lg:py-24">
+        <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Hero Content */}
+            <div className="space-y-8">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-foreground">
+                Bersama Kita Peduli,<br />
+                <span className="text-primary">Bersama Kita Berbagi</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
+                Membangun masa depan bangsa dengan kasih dan kepedulian tanpa batas untuk seluruh anak negeri
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" className="text-lg px-8 py-6 shadow-colored" asChild>
+                  <Link to="/get-involved">
+                    Donasi Sekarang
+                    <Heart className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+                <Button variant="outline" size="lg" className="text-lg px-8 py-6" asChild>
+                  <Link to="/get-involved">
+                    Menjadi Relawan
+                    <Users className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+
+            {/* Hero Image */}
+            <div className="relative">
+              <div className="relative overflow-hidden rounded-2xl shadow-strong">
+                <img 
+                  src={heroImage} 
+                  alt="Anak-anak Indonesia yang bahagia belajar bersama" 
+                  className="w-full h-[500px] lg:h-[600px] object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              </div>
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/10 rounded-full blur-xl"></div>
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-secondary/10 rounded-full blur-xl"></div>
+            </div>
           </div>
         </div>
       </section>
