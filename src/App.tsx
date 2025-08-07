@@ -7,7 +7,7 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Programs from "./pages/Programs";
-import Campaigns from "./pages/Campaigns";
+import Donate from "./pages/Donate";
 import Events from "./pages/Events";
 import GetInvolved from "./pages/GetInvolved";
 import News from "./pages/News";
@@ -27,12 +27,11 @@ const App = () => (
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/programs" element={<Programs />} />
-            <Route path="/campaigns" element={<Campaigns />} />
+            <Route path="/donate" element={<Donate />} />
             <Route path="/events" element={<Events />} />
             <Route path="/get-involved" element={<GetInvolved />} />
             <Route path="/news" element={<News />} />
             <Route path="/contact" element={<Contact />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>

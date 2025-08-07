@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Heart, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,9 +11,8 @@ const Header = () => {
     { name: "Beranda", href: "/" },
     { name: "Tentang Kami", href: "/about" },
     { name: "Program", href: "/programs" },
-    { name: "Kampanye", href: "/campaigns" },
+    { name: "Donasi", href: "/donate" },
     { name: "Acara", href: "/events" },
-    { name: "Bergabung", href: "/get-involved" },
     { name: "Berita", href: "/news" },
     { name: "Kontak", href: "/contact" },
   ];
@@ -26,8 +25,8 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-              <Heart className="h-6 w-6 text-primary-foreground" />
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center">
+              <img src="/logo-site.png" alt="Yayasan Harapan Bagimu Negeri" className="h-10 w-10 object-contain" />
             </div>
             <div className="hidden sm:block">
               <h1 className="text-lg font-bold text-foreground">
@@ -56,11 +55,8 @@ const Header = () => {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center space-x-3">
-            <Button variant="outline" size="sm" asChild>
-              <Link to="/get-involved">Menjadi Relawan</Link>
-            </Button>
             <Button size="sm" asChild>
-              <Link to="/get-involved">Donasi Sekarang</Link>
+              <Link to="/donate">Donasi Sekarang</Link>
             </Button>
           </div>
 
