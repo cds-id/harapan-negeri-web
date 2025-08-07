@@ -1,9 +1,13 @@
+import PageBlank from "@/components/PageBlank";
+
 const About = () => {
   return (
-    <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <h1 className="text-4xl font-bold text-center mb-8">Tentang Kami</h1>
+    <PageBlank 
+      title="Tentang Kami" 
+      description="Mengenal lebih dekat Yayasan Harapan Bagimu Negeri dan visi misi kami"
+    >
       <p className="text-lg text-center text-muted-foreground">Halaman ini sedang dalam pengembangan.</p>
-    </div>
+    </PageBlank>
   );
 };
 
