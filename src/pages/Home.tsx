@@ -1,10 +1,31 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import { Link } from "react-router-dom";
 import { Heart, Users, Target, BookOpen, Award, TrendingUp, ArrowRight, Calendar, MapPin } from "lucide-react";
 import heroImage from "@/assets/hero-children.jpg";
 
 const Home = () => {
+  const heroSlides = [
+    {
+      image: heroImage,
+      alt: "Anak-anak Indonesia yang bahagia belajar bersama"
+    },
+    {
+      image: heroImage,
+      alt: "Program beasiswa untuk anak-anak berprestasi"
+    },
+    {
+      image: heroImage,
+      alt: "Kegiatan bakti sosial di berbagai daerah"
+    },
+    {
+      image: heroImage,
+      alt: "Pelatihan keterampilan untuk masa depan"
+    }
+  ];
+
   const stats = [
     { number: "137", label: "Anak & Keluarga Terbantu", icon: Heart },
     { number: "135", label: "Ide & Program Pertumbuhan", icon: Target },
@@ -13,28 +34,22 @@ const Home = () => {
 
   const programs = [
     {
-      title: "Beasiswa Anak Negeri",
-      description: "Program beasiswa untuk anak-anak kurang mampu di seluruh Indonesia",
+      title: "Beasiswa Sekolah",
+      description: "Program beasiswa pendidikan untuk anak-anak kurang mampu agar tetap bisa bersekolah",
       icon: BookOpen,
       color: "bg-primary"
     },
     {
-      title: "Pelatihan Keterampilan",
-      description: "Kursus gratis desain grafis, menjahit, dan digital marketing",
-      icon: Award,
+      title: "Panti Asuhan",
+      description: "Menampung dan merawat anak-anak kurang mampu dengan kasih sayang dan pendidikan",
+      icon: Users,
       color: "bg-secondary"
     },
     {
-      title: "Bakti Sosial & Kesehatan",
-      description: "Pemeriksaan kesehatan gratis dan distribusi kebutuhan pokok",
+      title: "Bakti Sosial",
+      description: "Kegiatan sosial kemasyarakatan untuk membantu sesama yang membutuhkan",
       icon: Heart,
       color: "bg-info"
-    },
-    {
-      title: "Program UMKM Lokal",
-      description: "Pendampingan usaha kecil menengah di desa-desa",
-      icon: TrendingUp,
-      color: "bg-success"
     },
   ];
 
@@ -90,16 +105,38 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Hero Image */}
+            {/* Hero Slideshow */}
             <div className="relative">
-              <div className="relative overflow-hidden rounded-2xl shadow-strong">
-                <img
-                  src={heroImage}
-                  alt="Anak-anak Indonesia yang bahagia belajar bersama"
-                  className="w-full h-[500px] lg:h-[600px] object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-              </div>
+              <Carousel 
+                className="relative overflow-hidden rounded-2xl shadow-strong"
+                plugins={[
+                  Autoplay({
+                    delay: 4000,
+                    stopOnInteraction: true,
+                  }),
+                ]}
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+              >
+                <CarouselContent>
+                  {heroSlides.map((slide, index) => (
+                    <CarouselItem key={index}>
+                      <div className="relative">
+                        <img
+                          src={slide.image}
+                          alt={slide.alt}
+                          className="w-full h-[500px] lg:h-[600px] object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white" />
+                <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white" />
+              </Carousel>
               {/* Decorative elements */}
               <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/10 rounded-full blur-xl"></div>
               <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-secondary/10 rounded-full blur-xl"></div>
@@ -151,7 +188,7 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {programs.map((program, index) => {
               const Icon = program.icon;
               return (

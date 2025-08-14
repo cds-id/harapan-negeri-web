@@ -304,7 +304,7 @@ const Contact = () => {
                   <Phone className="mr-2 h-5 w-5" />
                   Hubungi Sekarang
                 </Button>
-                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                <Button size="lg" variant="outline" className="border-white/30 text-white text-primary hover:bg-white">
                   <Mail className="mr-2 h-5 w-5" />
                   Kirim Email
                 </Button>

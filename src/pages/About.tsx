@@ -34,37 +34,32 @@ const About = () => {
 
   const programs = [
     {
-      title: "Beasiswa Anak Negeri",
-      description: "Dukungan pendidikan bagi siswa dari keluarga tidak mampu",
+      title: "Beasiswa Sekolah",
+      description: "Program beasiswa pendidikan untuk anak-anak kurang mampu agar tetap bisa bersekolah",
       icon: BookOpen,
       color: "bg-primary"
     },
     {
-      title: "Pelatihan Keterampilan",
-      description: "Kursus gratis desain grafis, menjahit, digital marketing, dll",
-      icon: Award,
+      title: "Panti Asuhan",
+      description: "Menampung dan merawat anak-anak kurang mampu dengan kasih sayang dan pendidikan",
+      icon: Users,
       color: "bg-secondary"
     },
     {
-      title: "Bakti Sosial dan Kesehatan Gratis",
-      description: "Pemeriksaan kesehatan, pembagian sembako, dan lainnya",
+      title: "Bakti Sosial",
+      description: "Kegiatan sosial kemasyarakatan untuk membantu sesama yang membutuhkan",
       icon: Heart,
       color: "bg-info"
-    },
-    {
-      title: "Program UMKM Lokal",
-      description: "Membina dan mendampingi usaha kecil di desa-desa",
-      icon: TrendingUp,
-      color: "bg-success"
     }
   ];
 
   const organizationStructure = [
-    { position: "Pembina", name: "Jemmy Jeftha Lesnussa" },
-    { position: "Pengawas", name: "Bonifasius Lutu Edo" },
-    { position: "Ketua", name: "Andre Febrianto & Eli Saat" },
-    { position: "Sekretaris", name: "Tri H. Sirait" },
-    { position: "Bendahara", name: "Johanes Jung" }
+    { position: "Pembina", name: "Bpk. Jemmy Jeftha Lesnussa" },
+    { position: "Pengawas", name: "Bpk. Bonifasius Lutu Edo" },
+    { position: "Ketua Yayasan", name: "Bpk. Andre Febrianto" },
+    { position: "Wakil Ketua Yayasan", name: "Ibu Eli Saat" },
+    { position: "Sekretaris", name: "Ibu Tri H. Sirait" },
+    { position: "Bendahara", name: "Bpk. Johanes Jung" }
   ];
 
   const missions = [
@@ -199,7 +194,7 @@ const About = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {programs.map((program, index) => {
               const Icon = program.icon;
               return (

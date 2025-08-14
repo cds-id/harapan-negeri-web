@@ -363,12 +363,6 @@ const Events = () => {
                   <Heart className="mr-2 h-5 w-5" />
                   Daftar Event
                 </Button>
-                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10" asChild>
-                  <Link to="/get-involved">
-                    Menjadi Relawan
-                    <Users className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
               </div>
             </CardContent>
           </Card>

@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindAnimate from "tailwindcss-animate"
 
 export default {
 	darkMode: ["class"],
@@ -76,7 +77,7 @@ export default {
 			},
 			boxShadow: {
 				'soft': 'var(--shadow-soft)',
-				'medium': 'var(--shadow-medium)', 
+				'medium': 'var(--shadow-medium)',
 				'strong': 'var(--shadow-strong)',
 				'colored': 'var(--shadow-colored)'
 			},
@@ -113,5 +114,5 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [tailwindAnimate],
 } satisfies Config;

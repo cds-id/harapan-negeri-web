@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
-import { Heart, Phone, Mail, MapPin } from "lucide-react";
+import { Heart, Phone, Mail, MapPin, Instagram, Facebook, Youtube } from "lucide-react";
 
 const Footer = () => {
+  const TikTokIcon = () => (
+    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+    </svg>
+  );
+
   return (
     <footer className="bg-secondary text-secondary-foreground">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -23,6 +29,49 @@ const Footer = () => {
             <div className="space-y-2">
               <p className="text-sm"><strong>NPWP:</strong> 43.072.813.9-026.000</p>
               <p className="text-sm"><strong>Registrasi:</strong> 0016126.AH.01.04.Tahun 2021</p>
+            </div>
+            
+            {/* Social Media */}
+            <div className="mt-6">
+              <h4 className="text-sm font-semibold mb-3">Ikuti Kami</h4>
+              <div className="flex space-x-4">
+                <a
+                  href="https://instagram.com/harapanbagimunegeri"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="h-5 w-5" />
+                </a>
+                <a
+                  href="https://facebook.com/harapanbagimunegeri"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="h-5 w-5" />
+                </a>
+                <a
+                  href="https://tiktok.com/@harapanbagimunegeri"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                  aria-label="TikTok"
+                >
+                  <TikTokIcon />
+                </a>
+                <a
+                  href="https://youtube.com/@harapanbagimunegeri"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                  aria-label="YouTube"
+                >
+                  <Youtube className="h-5 w-5" />
+                </a>
+              </div>
             </div>
           </div>
 

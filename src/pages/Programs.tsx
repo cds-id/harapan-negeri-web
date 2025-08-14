@@ -2,81 +2,66 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { BookOpen, Award, Heart, TrendingUp, Users, Target, Calendar, MapPin, ArrowRight, CheckCircle } from "lucide-react";
+import { BookOpen, Home, Heart, Users, Calendar, MapPin, ArrowRight, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Programs = () => {
   const mainPrograms = [
     {
       id: 1,
-      title: "Beasiswa Anak Negeri",
-      description: "Program beasiswa pendidikan untuk anak-anak dari keluarga kurang mampu di seluruh Indonesia. Memberikan dukungan biaya sekolah, buku, seragam, dan kebutuhan pendidikan lainnya.",
+      title: "Beasiswa Sekolah",
+      description: "Program beasiswa pendidikan untuk anak-anak dari keluarga kurang mampu di seluruh Indonesia. Memberikan dukungan penuh biaya sekolah, buku pelajaran, seragam, dan kebutuhan pendidikan lainnya untuk memastikan setiap anak mendapatkan pendidikan yang layak.",
       icon: BookOpen,
       color: "bg-primary",
       status: "Aktif",
-      beneficiaries: "137 Anak",
-      locations: "15 Provinsi",
+      beneficiaries: "250 Penerima Beasiswa",
+      locations: "20 Kota/Kabupaten",
       progress: 85,
       features: [
-        "Bantuan biaya sekolah bulanan",
-        "Penyediaan buku dan alat tulis",
+        "Bantuan biaya SPP bulanan",
+        "Penyediaan buku pelajaran lengkap",
         "Seragam dan perlengkapan sekolah",
-        "Bimbingan belajar gratis",
-        "Monitoring prestasi akademik"
+        "Uang saku dan transportasi",
+        "Bimbingan belajar tambahan",
+        "Monitoring prestasi akademik berkala"
       ]
     },
     {
       id: 2,
-      title: "Pelatihan Keterampilan",
-      description: "Kursus gratis berbagai keterampilan seperti desain grafis, menjahit, digital marketing, dan keterampilan lainnya untuk meningkatkan kemampuan masyarakat.",
-      icon: Award,
+      title: "Panti Asuhan Anak Kurang Mampu",
+      description: "Menampung dan merawat anak-anak yatim piatu serta anak-anak dari keluarga kurang mampu. Menyediakan tempat tinggal yang layak, pendidikan, kesehatan, dan kasih sayang untuk tumbuh kembang optimal.",
+      icon: Home,
       color: "bg-secondary",
       status: "Aktif",
-      beneficiaries: "450+ Peserta",
-      locations: "8 Kota",
+      beneficiaries: "85 Anak Asuh",
+      locations: "3 Cabang Panti",
       progress: 92,
       features: [
-        "Pelatihan desain grafis",
-        "Kursus menjahit dan fashion",
-        "Digital marketing dan e-commerce",
-        "Keterampilan komputer dasar",
-        "Sertifikat kompetensi"
+        "Tempat tinggal yang layak dan aman",
+        "Makanan bergizi 3 kali sehari",
+        "Pendidikan formal hingga SMA",
+        "Pemeriksaan kesehatan rutin",
+        "Kegiatan pengembangan bakat",
+        "Bimbingan rohani dan karakter"
       ]
     },
     {
       id: 3,
-      title: "Bakti Sosial & Kesehatan",
-      description: "Program pemeriksaan kesehatan gratis, pembagian sembako, dan bantuan kebutuhan dasar untuk masyarakat kurang mampu.",
+      title: "Bakti Sosial",
+      description: "Program bantuan langsung untuk masyarakat kurang mampu meliputi pemeriksaan kesehatan gratis, pembagian sembako, bantuan renovasi rumah, dan berbagai kegiatan sosial kemasyarakatan lainnya.",
       icon: Heart,
       color: "bg-info",
       status: "Aktif",
-      beneficiaries: "2,500+ Keluarga",
-      locations: "12 Daerah",
+      beneficiaries: "5,000+ Keluarga",
+      locations: "25 Desa/Kelurahan",
       progress: 78,
       features: [
-        "Pemeriksaan kesehatan gratis",
+        "Pemeriksaan kesehatan gratis bulanan",
         "Pembagian sembako rutin",
-        "Bantuan obat-obatan",
-        "Penyuluhan kesehatan",
-        "Program gizi untuk anak"
-      ]
-    },
-    {
-      id: 4,
-      title: "Program UMKM Lokal",
-      description: "Pembinaan dan pendampingan usaha kecil menengah di desa-desa untuk meningkatkan ekonomi masyarakat lokal.",
-      icon: TrendingUp,
-      color: "bg-success",
-      status: "Aktif",
-      beneficiaries: "85 UMKM",
-      locations: "6 Desa",
-      progress: 65,
-      features: [
-        "Pelatihan manajemen usaha",
-        "Bantuan modal usaha",
-        "Pendampingan pemasaran",
-        "Akses ke pasar digital",
-        "Networking antar UMKM"
+        "Bantuan obat-obatan gratis",
+        "Program bedah rumah tidak layak huni",
+        "Bantuan korban bencana alam",
+        "Santunan anak yatim dan lansia"
       ]
     }
   ];
@@ -103,10 +88,10 @@ const Programs = () => {
   ];
 
   const achievements = [
-    { number: "137", label: "Anak Beasiswa", icon: BookOpen },
-    { number: "450+", label: "Peserta Pelatihan", icon: Award },
-    { number: "2,500+", label: "Keluarga Terbantu", icon: Heart },
-    { number: "85", label: "UMKM Dibina", icon: TrendingUp }
+    { number: "250", label: "Penerima Beasiswa", icon: BookOpen },
+    { number: "85", label: "Anak Panti Asuhan", icon: Home },
+    { number: "5,000+", label: "Keluarga Terbantu", icon: Heart },
+    { number: "25", label: "Desa Binaan", icon: Users }
   ];
 
   return (
@@ -121,7 +106,7 @@ const Programs = () => {
             Berbagai program pemberdayaan dan bantuan untuk membangun masa depan Indonesia yang lebih baik
           </p>
           <Badge variant="outline" className="text-lg px-6 py-2 border-primary text-primary">
-            4 Program Aktif
+            3 Program Aktif
           </Badge>
         </div>
 
@@ -271,12 +256,6 @@ const Programs = () => {
                   <Link to="/get-involved">
                     Donasi Sekarang
                     <Heart className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
-                <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10" asChild>
-                  <Link to="/get-involved">
-                    Menjadi Relawan
-                    <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
               </div>

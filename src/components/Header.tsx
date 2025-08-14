@@ -22,30 +22,30 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center">
-              <img src="/logo-site.png" alt="Yayasan Harapan Bagimu Negeri" className="h-10 w-10 object-contain" />
+          <Link to="/" className="flex items-center space-x-4 group">
+            <div className="w-20 h-20 rounded-lg flex items-center justify-center transition-transform group-hover:scale-105">
+              <img src="/logo-site.png" alt="Yayasan Harapan Bagimu Negeri" className="h-20 w-20 object-contain" />
             </div>
-            <div className="hidden sm:block">
-              <h1 className="text-lg font-bold text-foreground">
-                Yayasan Harapan
+            <div className="hidden sm:flex flex-col">
+              <h1 className="text-xl font-bold text-foreground leading-tight">
+                Yayasan Harapan Bagimu Negeri
               </h1>
-              <p className="text-xs text-muted-foreground">Bagimu Negeri</p>
+              <p className="text-sm text-muted-foreground">Memberikan Harapan untuk Indonesia</p>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1">
+          <nav className="hidden lg:flex items-center space-x-2">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ease-in-out transform hover:scale-105 ${
                   isActive(item.href)
-                    ? "bg-primary text-primary-foreground"
-                    : "text-foreground hover:bg-accent hover:text-accent-foreground"
+                    ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground shadow-lg"
+                    : "text-foreground hover:bg-gradient-to-r hover:from-accent hover:to-accent/80 hover:text-accent-foreground hover:shadow-md"
                 }`}
               >
                 {item.name}
