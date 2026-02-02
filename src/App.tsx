@@ -13,6 +13,7 @@ import Programs from "./pages/Programs";
 import Events from "./pages/Events";
 
 import News from "./pages/News";
+import NewsDetail from "./pages/NewsDetail";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Donate from "./pages/Donate";
@@ -54,6 +55,7 @@ const App = () => (
                 <Route path="/events" element={<Layout><Events /></Layout>} />
                 
                 <Route path="/news" element={<Layout><News /></Layout>} />
+                <Route path="/news/:slug" element={<Layout><NewsDetail /></Layout>} />
                 <Route path="/contact" element={<Layout><Contact /></Layout>} />
                 <Route
                   path="/admin/donations"

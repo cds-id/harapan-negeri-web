@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -195,9 +196,11 @@ const News = () => {
                   </div>
                   
                   <div className="flex gap-3">
-                    <Button size="lg">
-                      Baca Selengkapnya
-                      <ArrowRight className="ml-2 h-5 w-5" />
+                    <Button size="lg" asChild>
+                      <Link to={`/news/${featuredNews.slug}`}>
+                        Baca Selengkapnya
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                      </Link>
                     </Button>
                   </div>
                 </div>
@@ -282,9 +285,11 @@ const News = () => {
                           {news.location}
                         </div>
                       )}
-                      <Button variant="ghost" size="sm">
-                        Baca
-                        <ArrowRight className="ml-1 h-4 w-4" />
+                      <Button variant="ghost" size="sm" asChild>
+                        <Link to={`/news/${news.slug}`}>
+                          Baca
+                          <ArrowRight className="ml-1 h-4 w-4" />
+                        </Link>
                       </Button>
                     </div>
                   </CardContent>
