@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { Heart, Phone, Mail, MapPin, Instagram, Facebook, Youtube } from "lucide-react";
+import { useContactInfo } from "@/hooks/useSiteSettings";
 
 const Footer = () => {
+  const { data: contactInfo } = useContactInfo();
+
   const TikTokIcon = () => (
     <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
       <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
@@ -19,8 +22,12 @@ const Footer = () => {
                 <Heart className="h-8 w-8 text-primary-foreground" />
               </div>
               <div>
-                <h3 className="text-xl font-bold">Yayasan Harapan Bagimu Negeri</h3>
-                <p className="text-secondary-foreground/80">Bersama Kita Peduli, Bersama Kita Berbagi</p>
+                <h3 className="text-xl font-bold">
+                  {contactInfo?.organizationName || 'Yayasan Harapan Bagimu Negeri'}
+                </h3>
+                <p className="text-secondary-foreground/80">
+                  {contactInfo?.organizationTagline || 'Bersama Kita Peduli, Bersama Kita Berbagi'}
+                </p>
               </div>
             </div>
             <p className="text-secondary-foreground/80 mb-4 max-w-md">
@@ -35,24 +42,28 @@ const Footer = () => {
             <div className="mt-6">
               <h4 className="text-sm font-semibold mb-3">Ikuti Kami</h4>
               <div className="flex space-x-4">
-                <a
-                  href="https://instagram.com/harapanbagimunegeri"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
-                  aria-label="Instagram"
-                >
-                  <Instagram className="h-5 w-5" />
-                </a>
-                <a
-                  href="https://facebook.com/harapanbagimunegeri"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
-                  aria-label="Facebook"
-                >
-                  <Facebook className="h-5 w-5" />
-                </a>
+                {contactInfo?.instagram && (
+                  <a
+                    href={`https://instagram.com/${contactInfo.instagram.replace('@', '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                    aria-label="Instagram"
+                  >
+                    <Instagram className="h-5 w-5" />
+                  </a>
+                )}
+                {contactInfo?.facebook && (
+                  <a
+                    href={`https://facebook.com/${contactInfo.facebook.replace(/\s+/g, '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                    aria-label="Facebook"
+                  >
+                    <Facebook className="h-5 w-5" />
+                  </a>
+                )}
                 <a
                   href="https://tiktok.com/@harapanbagimunegeri"
                   target="_blank"
@@ -62,15 +73,17 @@ const Footer = () => {
                 >
                   <TikTokIcon />
                 </a>
-                <a
-                  href="https://youtube.com/@harapanbagimunegeri"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
-                  aria-label="YouTube"
-                >
-                  <Youtube className="h-5 w-5" />
-                </a>
+                {contactInfo?.youtube && (
+                  <a
+                    href={`https://youtube.com/${contactInfo.youtube}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-colors"
+                    aria-label="YouTube"
+                  >
+                    <Youtube className="h-5 w-5" />
+                  </a>
+                )}
               </div>
             </div>
           </div>
@@ -92,19 +105,29 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Kontak</h4>
             <ul className="space-y-3">
               <li className="flex items-start space-x-2">
-                <MapPin className="h-5 w-5 mt-0.5 text-secondary-foreground/60" />
+                <MapPin className="h-5 w-5 mt-0.5 text-secondary-foreground/60 flex-shrink-0" />
                 <span className="text-sm text-secondary-foreground/80">
-                  Jl. Pangeran Jayakarta 117 B16<br />
-                  Kec. Sawah Besar, Jakarta Pusat
+                  {contactInfo?.address || 'Jl. Pangeran Jayakarta 117 B16'}
+                  {contactInfo?.addressDetail && <><br />{contactInfo.addressDetail}</>}
                 </span>
               </li>
               <li className="flex items-center space-x-2">
-                <Phone className="h-5 w-5 text-secondary-foreground/60" />
-                <span className="text-sm text-secondary-foreground/80">0812 8008 0600</span>
+                <Phone className="h-5 w-5 text-secondary-foreground/60 flex-shrink-0" />
+                <a 
+                  href={contactInfo?.whatsapp ? `https://wa.me/${contactInfo.whatsapp}` : `tel:${contactInfo?.phone?.replace(/\s/g, '')}`}
+                  className="text-sm text-secondary-foreground/80 hover:text-secondary-foreground transition-colors"
+                >
+                  {contactInfo?.phone || '0812 8008 0600'}
+                </a>
               </li>
               <li className="flex items-center space-x-2">
-                <Mail className="h-5 w-5 text-secondary-foreground/60" />
-                <span className="text-sm text-secondary-foreground/80">info@harapanbagimunegeri.org</span>
+                <Mail className="h-5 w-5 text-secondary-foreground/60 flex-shrink-0" />
+                <a 
+                  href={`mailto:${contactInfo?.email || 'info@harapanbagimunegeri.org'}`}
+                  className="text-sm text-secondary-foreground/80 hover:text-secondary-foreground transition-colors"
+                >
+                  {contactInfo?.email || 'info@harapanbagimunegeri.org'}
+                </a>
               </li>
             </ul>
           </div>
@@ -112,7 +135,7 @@ const Footer = () => {
 
         <div className="border-t border-secondary-foreground/20 mt-8 pt-8 text-center">
           <p className="text-sm text-secondary-foreground/60">
-            © 2026 Yayasan Harapan Bagimu Negeri. Semua hak dilindungi.
+            © {new Date().getFullYear()} {contactInfo?.organizationName || 'Yayasan Harapan Bagimu Negeri'}. Semua hak dilindungi.
           </p>
         </div>
       </div>
