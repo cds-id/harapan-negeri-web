@@ -1,95 +1,68 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, User, ArrowRight, Eye, Heart, Share2, Clock } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Calendar, MapPin, User, ArrowRight, Eye, Heart, Clock, Loader2 } from "lucide-react";
+import { usePublicNews, useFeaturedNews, useNewsCategories } from "@/hooks/useNews";
+import { useSubscribeNewsletter } from "@/hooks/useContact";
+import { formatDate } from "@/lib/supabase-helpers";
+import { useToast } from "@/hooks/use-toast";
 
 const News = () => {
-  const featuredNews = {
-    id: 1,
-    title: "Bakti Sosial Ramadan 2026: Berbagi Kebahagiaan di Bulan Suci",
-    excerpt: "Yayasan Harapan Bagimu Negeri berhasil mendistribusikan 500 paket sembako kepada keluarga kurang mampu di Jakarta Pusat dalam rangka menyambut bulan suci Ramadan.",
-    content: "Program bakti sosial Ramadan 2026 ini merupakan salah satu program unggulan yayasan yang telah berlangsung selama 5 tahun berturut-turut. Kegiatan ini melibatkan 50 relawan dan berhasil menjangkau 15 kelurahan di Jakarta Pusat.",
-    date: "15 Maret 2026",
-    location: "Jakarta Pusat",
-    author: "Tim Redaksi",
-    category: "Bakti Sosial",
-    readTime: "5 menit",
-    views: 1250,
-    image: "/api/placeholder/800/400"
+  const [email, setEmail] = useState("");
+  const { toast } = useToast();
+  
+  const { data: allNews, isLoading: isLoadingNews } = usePublicNews();
+  const { data: featuredNews, isLoading: isLoadingFeatured } = useFeaturedNews();
+  const { data: categories } = useNewsCategories();
+  const subscribeNewsletter = useSubscribeNewsletter();
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+
+    try {
+      await subscribeNewsletter.mutateAsync(email);
+      toast({
+        title: "Berhasil!",
+        description: "Terima kasih telah berlangganan newsletter kami.",
+      });
+      setEmail("");
+    } catch (error: any) {
+      toast({
+        title: "Gagal",
+        description: error.message || "Terjadi kesalahan. Silakan coba lagi.",
+        variant: "destructive",
+      });
+    }
   };
 
-  const recentNews = [
-    {
-      id: 2,
-      title: "Pelatihan Digital Marketing untuk UMKM Sukses Digelar",
-      excerpt: "50 peserta UMKM mengikuti pelatihan digital marketing gratis yang diselenggarakan di Bogor",
-      date: "10 Maret 2026",
-      location: "Bogor",
-      category: "Pelatihan",
-      readTime: "3 menit",
-      views: 890
-    },
-    {
-      id: 3,
-      title: "25 Anak Berprestasi Terima Beasiswa Pendidikan",
-      excerpt: "Pemberian beasiswa pendidikan untuk 25 anak berprestasi dari keluarga kurang mampu di Bandung",
-      date: "5 Maret 2026",
-      location: "Bandung",
-      category: "Pendidikan",
-      readTime: "4 menit",
-      views: 1100
-    },
-    {
-      id: 4,
-      title: "Program Kesehatan Gratis Jangkau 200 Keluarga",
-      excerpt: "Pemeriksaan kesehatan gratis dan pembagian obat-obatan untuk masyarakat di Depok",
-      date: "28 Februari 2026",
-      location: "Depok",
-      category: "Kesehatan",
-      readTime: "3 menit",
-      views: 750
-    },
-    {
-      id: 5,
-      title: "Workshop Keterampilan Menjahit Diminati Ibu-Ibu PKK",
-      excerpt: "30 ibu-ibu PKK antusias mengikuti workshop keterampilan menjahit di Tangerang",
-      date: "20 Februari 2026",
-      location: "Tangerang",
-      category: "Pelatihan",
-      readTime: "4 menit",
-      views: 650
-    },
-    {
-      id: 6,
-      title: "Kerjasama dengan Universitas untuk Program Beasiswa",
-      excerpt: "Penandatanganan MoU dengan 3 universitas untuk program beasiswa mahasiswa berprestasi",
-      date: "15 Februari 2026",
-      location: "Jakarta",
-      category: "Kerjasama",
-      readTime: "5 menit",
-      views: 980
-    }
-  ];
-
-  const categories = [
-    { name: "Semua", count: 25, active: true },
-    { name: "Bakti Sosial", count: 8, active: false },
-    { name: "Pendidikan", count: 7, active: false },
-    { name: "Pelatihan", count: 6, active: false },
-    { name: "Kesehatan", count: 4, active: false }
-  ];
-
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case "Bakti Sosial": return "bg-primary";
-      case "Pendidikan": return "bg-secondary";
-      case "Pelatihan": return "bg-info";
-      case "Kesehatan": return "bg-success";
-      case "Kerjasama": return "bg-warning";
+  const getCategoryColor = (categoryName: string) => {
+    switch (categoryName?.toLowerCase()) {
+      case "bakti sosial": return "bg-primary";
+      case "pendidikan": return "bg-secondary";
+      case "pelatihan": return "bg-info";
+      case "kesehatan": return "bg-success";
+      case "kerjasama": return "bg-warning";
       default: return "bg-muted";
     }
   };
+
+  if (isLoadingNews || isLoadingFeatured) {
+    return (
+      <div className="py-12">
+        <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <span className="ml-2 text-muted-foreground">Memuat berita...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Filter out featured news from the list
+  const recentNews = allNews?.filter(n => n.id !== featuredNews?.id) || [];
 
   return (
     <div className="py-12">
@@ -103,98 +76,115 @@ const News = () => {
             Update terbaru tentang kegiatan, program, dan dampak yang telah dicapai Yayasan Harapan Bagimu Negeri
           </p>
           <Badge variant="outline" className="text-lg px-6 py-2 border-primary text-primary">
-            25+ Artikel Terbaru
+            {allNews?.length || 0} Artikel
           </Badge>
         </div>
 
         {/* Categories Filter */}
-        <section className="mb-12">
-          <div className="flex flex-wrap justify-center gap-3">
-            {categories.map((category, index) => (
-              <Button
-                key={index}
-                variant={category.active ? "default" : "outline"}
-                className={`${category.active ? "" : "hover:bg-primary hover:text-primary-foreground"}`}
-              >
-                {category.name}
+        {categories && categories.length > 0 && (
+          <section className="mb-12">
+            <div className="flex flex-wrap justify-center gap-3">
+              <Button variant="default">
+                Semua
                 <Badge variant="secondary" className="ml-2">
-                  {category.count}
+                  {allNews?.length || 0}
                 </Badge>
               </Button>
-            ))}
-          </div>
-        </section>
+              {categories.map((category) => (
+                <Button key={category.id} variant="outline">
+                  {category.name}
+                </Button>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Featured News */}
-        <section className="mb-16">
-          <Card className="border-0 shadow-soft overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-              {/* Image */}
-              <div className="aspect-video lg:aspect-square bg-light-gray flex items-center justify-center">
-                <div className="text-center">
-                  <Heart className="h-16 w-16 text-primary mx-auto mb-4" />
-                  <p className="text-muted-foreground">Foto Kegiatan Bakti Sosial</p>
+        {featuredNews && (
+          <section className="mb-16">
+            <Card className="border-0 shadow-soft overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                {/* Image */}
+                <div className="aspect-video lg:aspect-square bg-light-gray flex items-center justify-center">
+                  {featuredNews.image_url ? (
+                    <img 
+                      src={featuredNews.image_url} 
+                      alt={featuredNews.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="text-center">
+                      <Heart className="h-16 w-16 text-primary mx-auto mb-4" />
+                      <p className="text-muted-foreground">Foto Kegiatan</p>
+                    </div>
+                  )}
+                </div>
+                
+                {/* Content */}
+                <div className="p-8 flex flex-col justify-center">
+                  <div className="flex items-center gap-4 mb-4 flex-wrap">
+                    {featuredNews.news_categories && (
+                      <Badge className={`${getCategoryColor(featuredNews.news_categories.name)} text-white`}>
+                        {featuredNews.news_categories.name}
+                      </Badge>
+                    )}
+                    <Badge variant="outline" className="text-primary border-primary">Unggulan</Badge>
+                    {featuredNews.published_at && (
+                      <div className="flex items-center text-sm text-muted-foreground">
+                        <Calendar className="h-4 w-4 mr-1" />
+                        {formatDate(featuredNews.published_at)}
+                      </div>
+                    )}
+                    {featuredNews.location && (
+                      <div className="flex items-center text-sm text-muted-foreground">
+                        <MapPin className="h-4 w-4 mr-1" />
+                        {featuredNews.location}
+                      </div>
+                    )}
+                  </div>
+                  
+                  <h2 className="text-3xl font-bold text-foreground mb-4">
+                    {featuredNews.title}
+                  </h2>
+                  
+                  <p className="text-lg text-muted-foreground mb-4 leading-relaxed">
+                    {featuredNews.excerpt}
+                  </p>
+                  
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                      {featuredNews.author && (
+                        <div className="flex items-center">
+                          <User className="h-4 w-4 mr-1" />
+                          {featuredNews.author}
+                        </div>
+                      )}
+                      {featuredNews.read_time && (
+                        <div className="flex items-center">
+                          <Clock className="h-4 w-4 mr-1" />
+                          {featuredNews.read_time}
+                        </div>
+                      )}
+                      {featuredNews.views !== null && featuredNews.views !== undefined && (
+                        <div className="flex items-center">
+                          <Eye className="h-4 w-4 mr-1" />
+                          {featuredNews.views}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="flex gap-3">
+                    <Button size="lg">
+                      Baca Selengkapnya
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </div>
                 </div>
               </div>
-              
-              {/* Content */}
-              <div className="p-8 flex flex-col justify-center">
-                <div className="flex items-center gap-4 mb-4">
-                  <Badge className={`${getCategoryColor(featuredNews.category)} text-white`}>
-                    {featuredNews.category}
-                  </Badge>
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <Calendar className="h-4 w-4 mr-1" />
-                    {featuredNews.date}
-                  </div>
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <MapPin className="h-4 w-4 mr-1" />
-                    {featuredNews.location}
-                  </div>
-                </div>
-                
-                <h2 className="text-3xl font-bold text-foreground mb-4">
-                  {featuredNews.title}
-                </h2>
-                
-                <p className="text-lg text-muted-foreground mb-4 leading-relaxed">
-                  {featuredNews.excerpt}
-                </p>
-                
-                <p className="text-muted-foreground mb-6">
-                  {featuredNews.content}
-                </p>
-                
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <div className="flex items-center">
-                      <User className="h-4 w-4 mr-1" />
-                      {featuredNews.author}
-                    </div>
-                    <div className="flex items-center">
-                      <Clock className="h-4 w-4 mr-1" />
-                      {featuredNews.readTime}
-                    </div>
-                    <div className="flex items-center">
-                      <Eye className="h-4 w-4 mr-1" />
-                      {featuredNews.views}
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="flex gap-3">
-                  <Button size="lg">
-                    Baca Selengkapnya
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                  <Button variant="outline" size="lg">
-                    <Share2 className="h-5 w-5" />
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </Card>
-        </section>
+            </Card>
+          </section>
+        )}
 
         {/* Recent News Grid */}
         <section className="mb-16">
@@ -205,63 +195,90 @@ const News = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recentNews.map((news) => (
-              <Card key={news.id} className="border-0 shadow-soft hover:shadow-medium transition-all hover:-translate-y-1">
-                {/* Image Placeholder */}
-                <div className="aspect-video bg-light-gray flex items-center justify-center">
-                  <div className="text-center">
-                    <Heart className="h-8 w-8 text-primary mx-auto mb-2" />
-                    <p className="text-sm text-muted-foreground">Foto Kegiatan</p>
-                  </div>
-                </div>
-                
-                <CardHeader>
-                  <div className="flex items-center justify-between mb-2">
-                    <Badge className={`${getCategoryColor(news.category)} text-white text-xs`}>
-                      {news.category}
-                    </Badge>
-                    <div className="flex items-center text-xs text-muted-foreground">
-                      <Eye className="h-3 w-3 mr-1" />
-                      {news.views}
-                    </div>
+          {recentNews.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {recentNews.map((news) => (
+                <Card key={news.id} className="border-0 shadow-soft hover:shadow-medium transition-all hover:-translate-y-1">
+                  {/* Image Placeholder */}
+                  <div className="aspect-video bg-light-gray flex items-center justify-center overflow-hidden">
+                    {news.image_url ? (
+                      <img 
+                        src={news.image_url} 
+                        alt={news.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="text-center">
+                        <Heart className="h-8 w-8 text-primary mx-auto mb-2" />
+                        <p className="text-sm text-muted-foreground">Foto Kegiatan</p>
+                      </div>
+                    )}
                   </div>
                   
-                  <CardTitle className="text-lg line-clamp-2">
-                    {news.title}
-                  </CardTitle>
+                  <CardHeader>
+                    <div className="flex items-center justify-between mb-2">
+                      {news.news_categories && (
+                        <Badge className={`${getCategoryColor(news.news_categories.name)} text-white text-xs`}>
+                          {news.news_categories.name}
+                        </Badge>
+                      )}
+                      {news.views !== null && news.views !== undefined && (
+                        <div className="flex items-center text-xs text-muted-foreground">
+                          <Eye className="h-3 w-3 mr-1" />
+                          {news.views}
+                        </div>
+                      )}
+                    </div>
+                    
+                    <CardTitle className="text-lg line-clamp-2">
+                      {news.title}
+                    </CardTitle>
+                    
+                    <CardDescription className="line-clamp-2">
+                      {news.excerpt}
+                    </CardDescription>
+                  </CardHeader>
                   
-                  <CardDescription className="line-clamp-2">
-                    {news.excerpt}
-                  </CardDescription>
-                </CardHeader>
-                
-                <CardContent>
-                  <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
-                    <div className="flex items-center">
-                      <Calendar className="h-4 w-4 mr-1" />
-                      {news.date}
+                  <CardContent>
+                    <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
+                      {news.published_at && (
+                        <div className="flex items-center">
+                          <Calendar className="h-4 w-4 mr-1" />
+                          {formatDate(news.published_at)}
+                        </div>
+                      )}
+                      {news.read_time && (
+                        <div className="flex items-center">
+                          <Clock className="h-4 w-4 mr-1" />
+                          {news.read_time}
+                        </div>
+                      )}
                     </div>
-                    <div className="flex items-center">
-                      <Clock className="h-4 w-4 mr-1" />
-                      {news.readTime}
+                    
+                    <div className="flex items-center justify-between">
+                      {news.location && (
+                        <div className="flex items-center text-sm text-muted-foreground">
+                          <MapPin className="h-4 w-4 mr-1" />
+                          {news.location}
+                        </div>
+                      )}
+                      <Button variant="ghost" size="sm">
+                        Baca
+                        <ArrowRight className="ml-1 h-4 w-4" />
+                      </Button>
                     </div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center text-sm text-muted-foreground">
-                      <MapPin className="h-4 w-4 mr-1" />
-                      {news.location}
-                    </div>
-                    <Button variant="ghost" size="sm">
-                      Baca
-                      <ArrowRight className="ml-1 h-4 w-4" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <Card className="border-0 shadow-soft">
+              <CardContent className="py-12 text-center">
+                <Heart className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <p className="text-lg text-muted-foreground">Belum ada berita terbaru</p>
+              </CardContent>
+            </Card>
+          )}
         </section>
 
         {/* Newsletter Subscription */}
@@ -274,29 +291,28 @@ const News = () => {
               <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
                 Dapatkan update terbaru tentang program dan kegiatan yayasan langsung di email Anda
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                 <input
                   type="email"
                   placeholder="Masukkan email Anda"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="flex-1 px-4 py-3 rounded-lg border border-input bg-background"
+                  required
                 />
-                <Button size="lg">
-                  Berlangganan
+                <Button size="lg" type="submit" disabled={subscribeNewsletter.isPending}>
+                  {subscribeNewsletter.isPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    "Berlangganan"
+                  )}
                 </Button>
-              </div>
+              </form>
               <p className="text-sm text-muted-foreground mt-4">
                 Kami menghormati privasi Anda. Unsubscribe kapan saja.
               </p>
             </CardContent>
           </Card>
-        </section>
-
-        {/* Load More */}
-        <section className="text-center">
-          <Button variant="outline" size="lg">
-            Muat Lebih Banyak Berita
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Button>
         </section>
       </div>
     </div>
