@@ -3,72 +3,54 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Heart, Users, Target, BookOpen, Award, TrendingUp, Eye, Lightbulb, Shield, Handshake, CheckCircle, Building2, FileText, Phone, MapPin } from "lucide-react";
 import PageBlank from "@/components/PageBlank";
+import { useAboutInfo, useContactInfo } from "@/hooks/useSiteSettings";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+  Heart,
+  Users,
+  Target,
+  BookOpen,
+  Award,
+  TrendingUp,
+  Eye,
+  Lightbulb,
+  Shield,
+  Handshake,
+  CheckCircle,
+  Building2,
+  FileText,
+  Phone,
+  MapPin,
+};
+
+const colorClasses = ['bg-primary', 'bg-info', 'bg-secondary', 'bg-success', 'bg-warning'];
 
 const About = () => {
-  const coreValues = [
-    {
-      title: "Kepedulian",
-      description: "Tanggap terhadap kebutuhan masyarakat",
-      icon: Heart,
-      color: "bg-primary"
-    },
-    {
-      title: "Transparansi",
-      description: "Mengelola dana dan program secara terbuka",
-      icon: Eye,
-      color: "bg-info"
-    },
-    {
-      title: "Kolaborasi",
-      description: "Bersinergi dengan berbagai pihak demi tujuan bersama",
-      icon: Handshake,
-      color: "bg-secondary"
-    },
-    {
-      title: "Integritas",
-      description: "Bertindak jujur dan bertanggung jawab",
-      icon: Shield,
-      color: "bg-success"
-    }
-  ];
+  const { data: aboutInfo, isLoading: aboutLoading } = useAboutInfo();
+  const { data: contactInfo, isLoading: contactLoading } = useContactInfo();
 
-  const programs = [
-    {
-      title: "Beasiswa Sekolah",
-      description: "Program beasiswa pendidikan untuk anak-anak kurang mampu agar tetap bisa bersekolah",
-      icon: BookOpen,
-      color: "bg-primary"
-    },
-    {
-      title: "Panti Asuhan",
-      description: "Menampung dan merawat anak-anak kurang mampu dengan kasih sayang dan pendidikan",
-      icon: Users,
-      color: "bg-secondary"
-    },
-    {
-      title: "Bakti Sosial",
-      description: "Kegiatan sosial kemasyarakatan untuk membantu sesama yang membutuhkan",
-      icon: Heart,
-      color: "bg-info"
-    }
-  ];
+  const isLoading = aboutLoading || contactLoading;
 
-  const organizationStructure = [
-    { position: "Pembina", name: "Bpk. Jemmy Jeftha Lesnussa" },
-    { position: "Pengawas", name: "Bpk. Bonifasius Lutu Edo" },
-    { position: "Ketua Yayasan", name: "Bpk. Andre Febrianto" },
-    { position: "Wakil Ketua Yayasan", name: "Ibu Eli Saat" },
-    { position: "Sekretaris", name: "Ibu Tri H. Sirait" },
-    { position: "Bendahara", name: "Bpk. Johanes Jung" }
-  ];
+  if (isLoading) {
+    return (
+      <PageBlank
+        title="Tentang Kami"
+        description="Mengenal lebih dekat Yayasan Harapan Bagimu Negeri dan komitmen kami untuk membangun masa depan Indonesia yang lebih baik"
+      >
+        <div className="space-y-8">
+          <Skeleton className="h-32 w-full" />
+          <Skeleton className="h-48 w-full" />
+          <Skeleton className="h-64 w-full" />
+        </div>
+      </PageBlank>
+    );
+  }
 
-  const missions = [
-    "Memberikan bantuan pendidikan kepada anak-anak kurang mampu agar mereka dapat menggapai masa depan yang lebih baik",
-    "Menyalurkan dukungan sosial berupa makanan, pakaian, dan kebutuhan dasar kepada keluarga rentan di berbagai daerah",
-    "Mendorong pengembangan masyarakat lokal melalui pelatihan keterampilan, kewirausahaan, dan pembinaan karakter",
-    "Menanamkan nilai kasih, persatuan, dan nasionalisme kepada generasi muda Indonesia",
-    "Berkolaborasi dengan masyarakat, pemerintah, dan lembaga lain untuk menciptakan program yang berkelanjutan dan inklusif"
-  ];
+  const values = aboutInfo?.values || [];
+  const programs = aboutInfo?.programs || [];
+  const structure = aboutInfo?.structure || [];
+  const missions = aboutInfo?.missions || [];
 
   return (
     <PageBlank
@@ -81,22 +63,23 @@ const About = () => {
         </Badge>
       </div>
 
-        {/* Organization Info */}
-        <section className="mb-16">
-          <Card className="border-0 shadow-soft">
-            <CardHeader className="text-center pb-6">
-              <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <Building2 className="h-10 w-10 text-primary-foreground" />
-              </div>
-              <CardTitle className="text-3xl mb-2">Yayasan Harapan Bagimu Negeri</CardTitle>
-              <CardDescription className="text-xl text-primary font-semibold">
-                "Bersama Kita Peduli, Bersama Kita Berbagi"
-              </CardDescription>
-            </CardHeader>
-          </Card>
-        </section>
+      {/* Organization Info */}
+      <section className="mb-16">
+        <Card className="border-0 shadow-soft">
+          <CardHeader className="text-center pb-6">
+            <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+              <Building2 className="h-10 w-10 text-primary-foreground" />
+            </div>
+            <CardTitle className="text-3xl mb-2">{contactInfo?.organizationName || 'Yayasan Harapan Bagimu Negeri'}</CardTitle>
+            <CardDescription className="text-xl text-primary font-semibold">
+              "{contactInfo?.organizationTagline || 'Bersama Kita Peduli, Bersama Kita Berbagi'}"
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      </section>
 
-        {/* Background Story */}
+      {/* Background Story */}
+      {aboutInfo?.background && (
         <section className="mb-16">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-foreground mb-4">Latar Belakang</h2>
@@ -104,20 +87,22 @@ const About = () => {
           <Card className="border-0 shadow-soft">
             <CardContent className="p-8">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Yayasan ini didirikan pada masa pandemi, berawal dari kepedulian terhadap sesama manusia dengan perpaduan latar belakang dari rohaniawan, pengusaha, karyawan dan pekerja sosial. Memiliki visi dan misi yang sama untuk membantu menangani pekerjaan rumah Pemerintah Republik Indonesia yang tidak bisa ditangani sepenuhnya oleh pemerintah, khususnya dalam bidang ekonomi, sosial dan budaya demi mewujudkan masyarakat yang adil dan makmur berdasarkan Pancasila dan UUD 1945.
+                {aboutInfo.background}
               </p>
             </CardContent>
           </Card>
         </section>
+      )}
 
-        {/* Vision & Mission */}
-        <section className="mb-16">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">Visi & Misi</h2>
-          </div>
+      {/* Vision & Mission */}
+      <section className="mb-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-foreground mb-4">Visi & Misi</h2>
+        </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Vision */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Vision */}
+          {aboutInfo?.vision && (
             <Card className="border-0 shadow-soft">
               <CardHeader>
                 <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-4">
@@ -127,12 +112,14 @@ const About = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  Menjadi yayasan yang membangun masa depan bangsa dengan kasih dan kepedulian tanpa batas untuk seluruh anak negeri.
+                  {aboutInfo.vision}
                 </p>
               </CardContent>
             </Card>
+          )}
 
-            {/* Mission */}
+          {/* Mission */}
+          {missions.length > 0 && (
             <Card className="border-0 shadow-soft">
               <CardHeader>
                 <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mb-4">
@@ -151,10 +138,12 @@ const About = () => {
                 </ul>
               </CardContent>
             </Card>
-          </div>
-        </section>
+          )}
+        </div>
+      </section>
 
-        {/* Core Values */}
+      {/* Core Values */}
+      {values.length > 0 && (
         <section className="mb-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">Nilai-Nilai Kami</h2>
@@ -164,12 +153,13 @@ const About = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {coreValues.map((value, index) => {
-              const Icon = value.icon;
+            {values.map((value, index) => {
+              const Icon = iconMap[value.icon] || Heart;
+              const colorClass = colorClasses[index % colorClasses.length];
               return (
                 <Card key={index} className="border-0 shadow-soft hover:shadow-medium transition-all hover:-translate-y-1">
                   <CardHeader className="text-center">
-                    <div className={`w-16 h-16 ${value.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                    <div className={`w-16 h-16 ${colorClass} rounded-full flex items-center justify-center mx-auto mb-4`}>
                       <Icon className="h-8 w-8 text-white" />
                     </div>
                     <CardTitle className="text-xl">{value.title}</CardTitle>
@@ -184,8 +174,10 @@ const About = () => {
             })}
           </div>
         </section>
+      )}
 
-        {/* Featured Programs */}
+      {/* Featured Programs */}
+      {programs.length > 0 && (
         <section className="mb-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">Program Unggulan</h2>
@@ -196,12 +188,13 @@ const About = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {programs.map((program, index) => {
-              const Icon = program.icon;
+              const Icon = iconMap[program.icon] || Heart;
+              const colorClass = colorClasses[index % colorClasses.length];
               return (
                 <Card key={index} className="border-0 shadow-soft hover:shadow-medium transition-shadow">
                   <CardHeader>
                     <div className="flex items-center">
-                      <div className={`w-12 h-12 ${program.color} rounded-lg flex items-center justify-center mr-4`}>
+                      <div className={`w-12 h-12 ${colorClass} rounded-lg flex items-center justify-center mr-4`}>
                         <Icon className="h-6 w-6 text-white" />
                       </div>
                       <CardTitle className="text-xl">{program.title}</CardTitle>
@@ -217,8 +210,10 @@ const About = () => {
             })}
           </div>
         </section>
+      )}
 
-        {/* Organization Structure */}
+      {/* Organization Structure */}
+      {structure.length > 0 && (
         <section className="mb-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">Struktur Organisasi</h2>
@@ -230,7 +225,7 @@ const About = () => {
           <Card className="border-0 shadow-soft">
             <CardContent className="p-8">
               <div className="space-y-6">
-                {organizationStructure.map((member, index) => (
+                {structure.map((member, index) => (
                   <div key={index}>
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                       <div className="flex items-center mb-2 sm:mb-0">
@@ -243,15 +238,17 @@ const About = () => {
                         </div>
                       </div>
                     </div>
-                    {index < organizationStructure.length - 1 && <Separator className="mt-6" />}
+                    {index < structure.length - 1 && <Separator className="mt-6" />}
                   </div>
                 ))}
               </div>
             </CardContent>
           </Card>
         </section>
+      )}
 
-        {/* Legal Information */}
+      {/* Legal Information */}
+      {(aboutInfo?.legalNpwp || aboutInfo?.legalKemenkumham || aboutInfo?.legalNotaris) && (
         <section className="mb-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">Legalitas</h2>
@@ -261,54 +258,62 @@ const About = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="border-0 shadow-soft">
-              <CardHeader className="text-center">
-                <div className="w-16 h-16 bg-info rounded-full flex items-center justify-center mx-auto mb-4">
-                  <FileText className="h-8 w-8 text-white" />
-                </div>
-                <CardTitle>NPWP</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-lg font-mono">43.072.813.9-026.000</p>
-              </CardContent>
-            </Card>
+            {aboutInfo?.legalNpwp && (
+              <Card className="border-0 shadow-soft">
+                <CardHeader className="text-center">
+                  <div className="w-16 h-16 bg-info rounded-full flex items-center justify-center mx-auto mb-4">
+                    <FileText className="h-8 w-8 text-white" />
+                  </div>
+                  <CardTitle>NPWP</CardTitle>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <p className="text-lg font-mono">{aboutInfo.legalNpwp}</p>
+                </CardContent>
+              </Card>
+            )}
 
-            <Card className="border-0 shadow-soft">
-              <CardHeader className="text-center">
-                <div className="w-16 h-16 bg-success rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Building2 className="h-8 w-8 text-white" />
-                </div>
-                <CardTitle>Kemenkumham</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-lg font-mono">0016126.AH.01.04.Tahun 2021</p>
-              </CardContent>
-            </Card>
+            {aboutInfo?.legalKemenkumham && (
+              <Card className="border-0 shadow-soft">
+                <CardHeader className="text-center">
+                  <div className="w-16 h-16 bg-success rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Building2 className="h-8 w-8 text-white" />
+                  </div>
+                  <CardTitle>Kemenkumham</CardTitle>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <p className="text-lg font-mono">{aboutInfo.legalKemenkumham}</p>
+                </CardContent>
+              </Card>
+            )}
 
-            <Card className="border-0 shadow-soft">
-              <CardHeader className="text-center">
-                <div className="w-16 h-16 bg-warning rounded-full flex items-center justify-center mx-auto mb-4">
-                  <FileText className="h-8 w-8 text-white" />
-                </div>
-                <CardTitle>SK Notaris</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-lg font-mono">01</p>
-              </CardContent>
-            </Card>
+            {aboutInfo?.legalNotaris && (
+              <Card className="border-0 shadow-soft">
+                <CardHeader className="text-center">
+                  <div className="w-16 h-16 bg-warning rounded-full flex items-center justify-center mx-auto mb-4">
+                    <FileText className="h-8 w-8 text-white" />
+                  </div>
+                  <CardTitle>SK Notaris</CardTitle>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <p className="text-lg font-mono">{aboutInfo.legalNotaris}</p>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </section>
+      )}
 
-        {/* Contact Information */}
-        <section>
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">Kontak Kami</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Hubungi kami untuk informasi lebih lanjut atau berkolaborasi
-            </p>
-          </div>
+      {/* Contact Information */}
+      <section>
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-foreground mb-4">Kontak Kami</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Hubungi kami untuk informasi lebih lanjut atau berkolaborasi
+          </p>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {contactInfo?.phone && (
             <Card className="border-0 shadow-soft">
               <CardHeader>
                 <div className="flex items-center">
@@ -319,10 +324,14 @@ const About = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-lg font-mono">0812 8008 0600</p>
+                <a href={`tel:${contactInfo.phone.replace(/\s/g, '')}`} className="text-lg font-mono hover:text-primary transition-colors">
+                  {contactInfo.phone}
+                </a>
               </CardContent>
             </Card>
+          )}
 
+          {contactInfo?.address && (
             <Card className="border-0 shadow-soft">
               <CardHeader>
                 <div className="flex items-center">
@@ -334,13 +343,19 @@ const About = () => {
               </CardHeader>
               <CardContent>
                 <p className="text-lg">
-                  Jl. Pangeran Jayakarta 117 B16<br />
-                  Kec. Sawah Besar, Jakarta Pusat
+                  {contactInfo.address}
+                  {contactInfo.addressDetail && (
+                    <>
+                      <br />
+                      {contactInfo.addressDetail}
+                    </>
+                  )}
                 </p>
               </CardContent>
             </Card>
-          </div>
-        </section>
+          )}
+        </div>
+      </section>
     </PageBlank>
   );
 };

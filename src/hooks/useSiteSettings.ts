@@ -24,6 +24,18 @@ export interface ContactInfo {
   organizationTagline: string;
 }
 
+export interface AboutInfo {
+  background: string;
+  vision: string;
+  missions: string[];
+  values: { title: string; description: string; icon: string }[];
+  programs: { title: string; description: string; icon: string }[];
+  structure: { position: string; name: string }[];
+  legalNpwp: string;
+  legalKemenkumham: string;
+  legalNotaris: string;
+}
+
 // Fetch all site settings
 export function useSiteSettings() {
   return useQuery({
@@ -73,6 +85,46 @@ export function useContactInfo() {
         organizationName: settings.organization_name || '',
         organizationTagline: settings.organization_tagline || '',
       } as ContactInfo;
+    },
+  });
+}
+
+// Fetch about page info
+export function useAboutInfo() {
+  return useQuery({
+    queryKey: ['about-info'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('site_settings')
+        .select('*')
+        .like('key', 'about_%');
+
+      if (error) throw error;
+
+      const settings: Record<string, string> = {};
+      (data as SiteSetting[]).forEach((item) => {
+        settings[item.key] = item.value || '';
+      });
+
+      const parseJSON = <T>(value: string, fallback: T): T => {
+        try {
+          return value ? JSON.parse(value) : fallback;
+        } catch {
+          return fallback;
+        }
+      };
+
+      return {
+        background: settings.about_background || '',
+        vision: settings.about_vision || '',
+        missions: parseJSON<string[]>(settings.about_missions, []),
+        values: parseJSON<{ title: string; description: string; icon: string }[]>(settings.about_values, []),
+        programs: parseJSON<{ title: string; description: string; icon: string }[]>(settings.about_programs, []),
+        structure: parseJSON<{ position: string; name: string }[]>(settings.about_structure, []),
+        legalNpwp: settings.about_legal_npwp || '',
+        legalKemenkumham: settings.about_legal_kemenkumham || '',
+        legalNotaris: settings.about_legal_notaris || '',
+      } as AboutInfo;
     },
   });
 }
