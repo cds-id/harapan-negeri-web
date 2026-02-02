@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Heart, Users, Handshake, CreditCard, Banknote, Smartphone, Building2, Clock, CheckCircle, Star, Gift, Target } from "lucide-react";
+import { Heart, Users, Handshake, Smartphone, Building2, CheckCircle, Gift, Target } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const GetInvolved = () => {
@@ -84,52 +84,6 @@ const GetInvolved = () => {
     }
   ];
 
-  const volunteerRoles = [
-    {
-      title: "Relawan Pendidikan",
-      description: "Membantu program beasiswa dan bimbingan belajar",
-      requirements: [
-        "Minimal lulusan SMA/sederajat",
-        "Memiliki passion di bidang pendidikan",
-        "Dapat berkomitmen minimal 4 jam/minggu",
-        "Lokasi: Jakarta, Bogor, Depok"
-      ],
-      time: "4-8 jam/minggu"
-    },
-    {
-      title: "Relawan Kesehatan",
-      description: "Mendukung program bakti sosial kesehatan",
-      requirements: [
-        "Latar belakang kesehatan (dokter, perawat, farmasi)",
-        "Memiliki STR/SIP yang masih berlaku",
-        "Bersedia mobile ke berbagai lokasi",
-        "Dapat berkomitmen minimal 1 hari/bulan"
-      ],
-      time: "8 jam/bulan"
-    },
-    {
-      title: "Relawan Digital",
-      description: "Mengelola media sosial dan dokumentasi",
-      requirements: [
-        "Menguasai media sosial dan content creation",
-        "Memiliki skill fotografi/videografi",
-        "Dapat bekerja remote",
-        "Kreatif dan up-to-date dengan tren digital"
-      ],
-      time: "Fleksibel"
-    },
-    {
-      title: "Relawan Event",
-      description: "Membantu penyelenggaraan acara dan kegiatan",
-      requirements: [
-        "Memiliki pengalaman event organizing",
-        "Komunikatif dan energik",
-        "Dapat bekerja dalam tim",
-        "Bersedia bekerja di weekend"
-      ],
-      time: "Sesuai jadwal event"
-    }
-  ];
 
   const partnershipTypes = [
     {
@@ -189,9 +143,6 @@ const GetInvolved = () => {
             <Badge variant="outline" className="text-lg px-6 py-2 border-primary text-primary">
               Donatur
             </Badge>
-            <Badge variant="outline" className="text-lg px-6 py-2 border-secondary text-secondary">
-              Relawan
-            </Badge>
             <Badge variant="outline" className="text-lg px-6 py-2 border-info text-info">
               Mitra
             </Badge>
@@ -221,14 +172,10 @@ const GetInvolved = () => {
         {/* Main Content Tabs */}
         <section className="mb-16">
           <Tabs defaultValue="donate" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
+            <TabsList className="grid w-full grid-cols-2 mb-8">
               <TabsTrigger value="donate" className="text-lg py-3">
                 <Heart className="mr-2 h-5 w-5" />
                 Donasi
-              </TabsTrigger>
-              <TabsTrigger value="volunteer" className="text-lg py-3">
-                <Users className="mr-2 h-5 w-5" />
-                Relawan
               </TabsTrigger>
               <TabsTrigger value="partnership" className="text-lg py-3">
                 <Handshake className="mr-2 h-5 w-5" />
@@ -304,68 +251,6 @@ const GetInvolved = () => {
                   })}
                 </div>
               </div>
-            </TabsContent>
-
-            {/* Volunteer Tab */}
-            <TabsContent value="volunteer" className="space-y-8">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-foreground mb-4">Menjadi Relawan</h2>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  Bergabunglah dengan tim relawan kami dan berikan kontribusi langsung untuk masyarakat
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {volunteerRoles.map((role, index) => (
-                  <Card key={index} className="border-0 shadow-soft">
-                    <CardHeader>
-                      <div className="flex items-center justify-between mb-2">
-                        <CardTitle className="text-xl">{role.title}</CardTitle>
-                        <Badge variant="outline" className="text-primary border-primary">
-                          <Clock className="h-3 w-3 mr-1" />
-                          {role.time}
-                        </Badge>
-                      </div>
-                      <CardDescription>{role.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <h4 className="font-semibold mb-3">Persyaratan:</h4>
-                      <ul className="space-y-2 mb-4">
-                        {role.requirements.map((req, reqIndex) => (
-                          <li key={reqIndex} className="flex items-start">
-                            <CheckCircle className="h-4 w-4 text-success mt-0.5 mr-2 flex-shrink-0" />
-                            <span className="text-sm text-muted-foreground">{req}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      <Button className="w-full">Daftar Sekarang</Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-
-              <Card className="border-0 shadow-soft bg-light-gray">
-                <CardContent className="p-8 text-center">
-                  <h3 className="text-2xl font-bold mb-4">Mengapa Menjadi Relawan?</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                      <Star className="h-12 w-12 text-primary mx-auto mb-3" />
-                      <h4 className="font-semibold mb-2">Pengalaman Berharga</h4>
-                      <p className="text-sm text-muted-foreground">Dapatkan pengalaman langsung dalam program sosial</p>
-                    </div>
-                    <div>
-                      <Users className="h-12 w-12 text-secondary mx-auto mb-3" />
-                      <h4 className="font-semibold mb-2">Jaringan Luas</h4>
-                      <p className="text-sm text-muted-foreground">Bertemu dengan orang-orang inspiratif</p>
-                    </div>
-                    <div>
-                      <Heart className="h-12 w-12 text-info mx-auto mb-3" />
-                      <h4 className="font-semibold mb-2">Dampak Nyata</h4>
-                      <p className="text-sm text-muted-foreground">Berkontribusi langsung untuk masyarakat</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
             </TabsContent>
 
             {/* Partnership Tab */}

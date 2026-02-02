@@ -3,10 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Users, Loader2, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Heart, Users, Loader2 } from "lucide-react";
 import { usePublicCampaigns } from "@/hooks/useCampaigns";
 import { formatCurrency, calculatePercentage } from "@/lib/supabase-helpers";
+import DonationConfirmForm from "@/components/DonationConfirmForm";
 
 const Donate = () => {
   const { data: campaigns, isLoading } = usePublicCampaigns();
@@ -16,7 +16,7 @@ const Donate = () => {
       title="Donasi"
       description="Dukung misi Yayasan Harapan Bagimu Negeri untuk membangun Indonesia yang lebih baik."
     >
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         {/* Active Campaigns */}
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
@@ -78,67 +78,59 @@ const Donate = () => {
           </section>
         ) : null}
 
-        {/* Divider */}
-        <div className="flex items-center gap-4 my-8">
-          <div className="flex-1 h-px bg-muted" />
-          <span className="text-muted-foreground text-sm font-medium">Metode Pembayaran</span>
-          <div className="flex-1 h-px bg-muted" />
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Payment Methods */}
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-center">Metode Pembayaran</h2>
+            
+            {/* QRIS Section */}
+            <Card className="border-0 shadow-soft">
+              <CardHeader className="text-center pb-2">
+                <CardTitle className="text-lg">Donasi via QRIS</CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-col items-center">
+                <img
+                  src="/payment-qris.png"
+                  alt="QRIS Harapan Bagimu Negeri"
+                  className="w-48 h-48 object-contain mb-4 border border-muted rounded-lg"
+                />
+                <p className="text-muted-foreground text-center mb-3 text-sm">
+                  Scan kode QRIS menggunakan aplikasi pembayaran Anda (GoPay, OVO, DANA, ShopeePay, Mobile Banking, dll).
+                </p>
+                <Button asChild variant="outline" size="sm">
+                  <a href="/payment-qris.png" download>
+                    Unduh QRIS
+                  </a>
+                </Button>
+              </CardContent>
+            </Card>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* QRIS Section */}
-          <section className="flex flex-col items-center gap-4">
-            <h2 className="text-2xl font-semibold mb-2 text-center">Donasi via QRIS</h2>
-            <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center w-full">
-              <img
-                src="/payment-qris.png"
-                alt="QRIS Harapan Bagimu Negeri"
-                className="w-56 h-56 object-contain mb-4 border border-muted rounded-lg"
-              />
-              <p className="text-muted-foreground text-center mb-2 text-sm">
-                Scan kode QRIS di atas menggunakan aplikasi pembayaran favorit Anda (GoPay, OVO, DANA, ShopeePay, Mobile Banking, dll).
-              </p>
-              <Button
-                asChild
-                className="mt-2"
-                size="lg"
-              >
-                <a href="/payment-qris.png" download>
-                  Unduh QRIS
-                </a>
-              </Button>
-            </div>
-          </section>
+            {/* Bank Transfer Section */}
+            <Card className="border-0 shadow-soft">
+              <CardHeader className="text-center pb-2">
+                <CardTitle className="text-lg">Transfer Bank</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2 text-center">
+                  <div className="flex items-center justify-center gap-2">
+                    <span className="font-medium">Bank</span>
+                    <span className="text-primary font-semibold">BCA</span>
+                  </div>
+                  <div className="text-primary font-mono text-2xl tracking-wider">
+                    5885377979
+                  </div>
+                  <div className="text-sm font-medium">
+                    a.n. YAY HARAPAN BAGIMU NEGERI
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
-          {/* Bank Transfer Section */}
-          <section className="flex flex-col items-center gap-4">
-            <h2 className="text-2xl font-semibold mb-2 text-center">Transfer Bank</h2>
-            <div className="bg-white rounded-xl shadow p-6 w-full">
-              <div className="mb-4 space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="font-medium text-lg">Bank</span>
-                  <span className="text-primary font-semibold">BCA</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-medium text-lg">Nomor Rekening</span>
-                  <span className="text-primary font-mono text-xl tracking-wider">5885377979</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="font-medium text-lg">Atas Nama</span>
-                  <span className="text-primary font-semibold">YAY HARAPAN BAGIMU NEGERI</span>
-                </div>
-              </div>
-              <div className="text-muted-foreground text-sm">
-                Mohon konfirmasi donasi Anda ke kontak kami setelah transfer untuk mendapatkan tanda terima resmi.
-              </div>
-              <Button variant="outline" className="w-full mt-4" asChild>
-                <Link to="/contact">
-                  Konfirmasi Donasi
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          </section>
+          {/* Donation Confirmation Form */}
+          <div>
+            <DonationConfirmForm />
+          </div>
         </div>
 
         {/* Call to Action */}
