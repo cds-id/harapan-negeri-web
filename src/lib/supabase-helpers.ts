@@ -1,4 +1,4 @@
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/client-public';
 
 // Generate slug from title
 export function generateSlug(title: string): string {
