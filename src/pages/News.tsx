@@ -3,19 +3,25 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin, User, ArrowRight, Eye, Heart, Clock, Loader2 } from "lucide-react";
-import { usePublicNews, useFeaturedNews, useNewsCategories } from "@/hooks/useNews";
+import { usePublicNews, useFeaturedNews, useNewsCategories, useNewsCategoryCounts } from "@/hooks/useNews";
 import { useSubscribeNewsletter } from "@/hooks/useContact";
 import { formatDate } from "@/lib/supabase-helpers";
 import { useToast } from "@/hooks/use-toast";
 
 const News = () => {
   const [email, setEmail] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const { toast } = useToast();
   
-  const { data: allNews, isLoading: isLoadingNews } = usePublicNews();
+  const { data: allNews, isLoading: isLoadingNews } = usePublicNews({ categoryId: selectedCategory });
   const { data: featuredNews, isLoading: isLoadingFeatured } = useFeaturedNews();
   const { data: categories } = useNewsCategories();
+  const { data: categoryCounts } = useNewsCategoryCounts();
   const subscribeNewsletter = useSubscribeNewsletter();
+
+  // Get total news count (unfiltered)
+  const { data: totalNews } = usePublicNews({});
+  const totalCount = totalNews?.length || 0;
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,8 +67,10 @@ const News = () => {
     );
   }
 
-  // Filter out featured news from the list
-  const recentNews = allNews?.filter(n => n.id !== featuredNews?.id) || [];
+  // Filter out featured news from the list only when showing all
+  const recentNews = selectedCategory 
+    ? allNews || []
+    : allNews?.filter(n => n.id !== featuredNews?.id) || [];
 
   return (
     <div className="py-12">
@@ -76,7 +84,7 @@ const News = () => {
             Update terbaru tentang kegiatan, program, dan dampak yang telah dicapai Yayasan Harapan Bagimu Negeri
           </p>
           <Badge variant="outline" className="text-lg px-6 py-2 border-primary text-primary">
-            {allNews?.length || 0} Artikel
+            {totalCount} Artikel
           </Badge>
         </div>
 
@@ -84,15 +92,27 @@ const News = () => {
         {categories && categories.length > 0 && (
           <section className="mb-12">
             <div className="flex flex-wrap justify-center gap-3">
-              <Button variant="default">
+              <Button 
+                variant={selectedCategory === null ? "default" : "outline"}
+                onClick={() => setSelectedCategory(null)}
+              >
                 Semua
                 <Badge variant="secondary" className="ml-2">
-                  {allNews?.length || 0}
+                  {totalCount}
                 </Badge>
               </Button>
               {categories.map((category) => (
-                <Button key={category.id} variant="outline">
+                <Button 
+                  key={category.id} 
+                  variant={selectedCategory === category.id ? "default" : "outline"}
+                  onClick={() => setSelectedCategory(category.id)}
+                >
                   {category.name}
+                  {categoryCounts && categoryCounts[category.id] && (
+                    <Badge variant="secondary" className="ml-2">
+                      {categoryCounts[category.id]}
+                    </Badge>
+                  )}
                 </Button>
               ))}
             </div>
