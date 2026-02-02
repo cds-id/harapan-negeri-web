@@ -103,6 +103,49 @@ export function useFeaturedNews() {
   });
 }
 
+// Fetch single news by slug
+export function useNewsBySlug(slug: string) {
+  return useQuery({
+    queryKey: ['news', slug],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('news')
+        .select('*, news_categories(*)')
+        .eq('slug', slug)
+        .eq('is_published', true)
+        .maybeSingle();
+
+      if (error) throw error;
+      return data as News | null;
+    },
+    enabled: !!slug,
+  });
+}
+
+// Increment news views
+export function useIncrementNewsViews() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id: string) => {
+      // Direct update for views
+      const { data: current } = await supabase
+        .from('news')
+        .select('views')
+        .eq('id', id)
+        .single();
+      
+      await supabase
+        .from('news')
+        .update({ views: (current?.views || 0) + 1 })
+        .eq('id', id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['public-news'] });
+    },
+  });
+}
+
 // Admin: Fetch all news
 export function useAdminNews() {
   return useQuery({
