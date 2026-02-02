@@ -22,17 +22,15 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-4 group">
-            <div className="w-20 h-20 rounded-lg flex items-center justify-center transition-transform group-hover:scale-105">
-              <img src="/logo-site.png" alt="Yayasan Harapan Bagimu Negeri" className="h-20 w-20 object-contain" />
-            </div>
-            <div className="hidden sm:flex flex-col">
-              <h1 className="text-xl font-bold text-foreground leading-tight">
-                Yayasan Harapan Bagimu Negeri
+        <div className="flex items-center justify-between h-16">
+          {/* Logo - More Compact */}
+          <Link to="/" className="flex items-center space-x-2 group">
+            <img src="/logo-site.png" alt="YHBN" className="h-10 w-10 object-contain" />
+            <div className="hidden sm:block">
+              <h1 className="text-base font-bold text-foreground leading-tight">
+                YHBN
               </h1>
-              <p className="text-sm text-muted-foreground">Memberikan Harapan untuk Indonesia</p>
+              <p className="text-xs text-muted-foreground hidden md:block">Yayasan Harapan Bagimu Negeri</p>
             </div>
           </Link>
 
