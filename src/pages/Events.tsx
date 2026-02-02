@@ -54,119 +54,87 @@ const Events = () => {
   return (
     <PageBlank
       title="Acara & Kegiatan"
-      description="Ikuti berbagai acara dan kegiatan yang diselenggarakan Yayasan Harapan Bagimu Negeri untuk membangun Indonesia yang lebih baik"
+      description="Ikuti berbagai acara dan kegiatan yang diselenggarakan Yayasan Harapan Bagimu Negeri"
     >
-      <div className="text-center mb-16">
-        <Badge variant="outline" className="text-lg px-6 py-2 border-primary text-primary">
-          {upcomingEvents?.length || 0} Event Mendatang
-        </Badge>
-      </div>
-
 
       {/* Events Tabs */}
-      <section className="mb-16">
+      <section className="mb-12">
         <Tabs defaultValue="upcoming" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-8">
-            <TabsTrigger value="upcoming" className="text-lg py-3">
-              <Calendar className="mr-2 h-5 w-5" />
-              Event Mendatang ({upcomingEvents?.length || 0})
+          <TabsList className="grid w-full grid-cols-2 mb-6 max-w-md mx-auto">
+            <TabsTrigger value="upcoming">
+              <Calendar className="mr-2 h-4 w-4" />
+              Mendatang ({upcomingEvents?.length || 0})
             </TabsTrigger>
-            <TabsTrigger value="past" className="text-lg py-3">
-              <CheckCircle className="mr-2 h-5 w-5" />
-              Event Selesai ({pastEvents.length})
+            <TabsTrigger value="past">
+              <CheckCircle className="mr-2 h-4 w-4" />
+              Selesai ({pastEvents.length})
             </TabsTrigger>
           </TabsList>
 
           {/* Upcoming Events */}
-          <TabsContent value="upcoming" className="space-y-8">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-foreground mb-4">Event Mendatang</h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Jangan lewatkan kesempatan untuk berpartisipasi dalam program-program kami
-              </p>
-            </div>
+          <TabsContent value="upcoming" className="space-y-6">
 
             {upcomingEvents && upcomingEvents.length > 0 ? (
-              <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {upcomingEvents.map((event) => (
                   <Card key={event.id} className="border-0 shadow-soft hover:shadow-medium transition-shadow">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-6">
-                      {/* Event Info */}
-                      <div className="lg:col-span-2">
-                        <CardHeader className="p-0 mb-4">
-                          <div className="flex items-start justify-between mb-4">
-                            <div className="flex items-center">
-                              <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center mr-4">
-                                <Calendar className="h-8 w-8 text-white" />
-                              </div>
-                              <div>
-                                <CardTitle className="text-2xl mb-2">{event.title}</CardTitle>
-                                <div className="flex items-center gap-4">
-                                  <Badge variant="outline" className={getStatusColor(event.event_date)}>
-                                    {getStatusText(event.event_date)}
-                                  </Badge>
-                                  {event.max_participants && (
-                                    <span className="text-sm text-muted-foreground">
-                                      <Users className="h-4 w-4 inline mr-1" />
-                                      {event.current_participants || 0}/{event.max_participants} peserta
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <CardDescription className="text-base leading-relaxed mb-4">
-                            {event.description}
-                          </CardDescription>
-                        </CardHeader>
-
-                        {/* Event Details */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                          {event.event_date && (
-                            <div className="flex items-center">
-                              <Calendar className="h-4 w-4 text-primary mr-2" />
-                              <span>{formatDate(event.event_date)}</span>
-                            </div>
-                          )}
-                          {event.event_time && (
-                            <div className="flex items-center">
-                              <Clock className="h-4 w-4 text-primary mr-2" />
-                              <span>{event.event_time}</span>
-                            </div>
-                          )}
-                          {event.location && (
-                            <div className="flex items-center">
-                              <MapPin className="h-4 w-4 text-primary mr-2" />
-                              <span>{event.location}</span>
-                            </div>
-                          )}
-                        </div>
+                    {event.image_url && (
+                      <div className="aspect-video overflow-hidden rounded-t-lg">
+                        <img src={event.image_url} alt={event.title} className="w-full h-full object-cover" />
                       </div>
-
-                      {/* Registration Button */}
-                      <div className="flex flex-col justify-center">
-                        {event.content && (
-                          <div className="mb-4">
-                            <p className="text-sm text-muted-foreground line-clamp-4">{event.content}</p>
-                          </div>
-                        )}
-                        {event.registration_link ? (
-                          <Button className="w-full" size="lg" asChild>
-                            <a href={event.registration_link} target="_blank" rel="noopener noreferrer">
-                              Daftar Sekarang
-                              <ExternalLink className="ml-2 h-5 w-5" />
-                            </a>
-                          </Button>
-                        ) : (
-                          <Button className="w-full" size="lg" asChild>
-                            <Link to="/contact">
-                              Hubungi Kami
-                              <ArrowRight className="ml-2 h-5 w-5" />
-                            </Link>
-                          </Button>
+                    )}
+                    <CardHeader className="pb-3">
+                      <div className="flex items-center justify-between mb-2">
+                        <Badge variant="outline" className={getStatusColor(event.event_date)}>
+                          {getStatusText(event.event_date)}
+                        </Badge>
+                        {event.max_participants && (
+                          <span className="text-xs text-muted-foreground">
+                            <Users className="h-3 w-3 inline mr-1" />
+                            {event.current_participants || 0}/{event.max_participants}
+                          </span>
                         )}
                       </div>
-                    </div>
+                      <CardTitle className="text-xl line-clamp-2">{event.title}</CardTitle>
+                      <CardDescription className="line-clamp-2">{event.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <div className="space-y-2 text-sm text-muted-foreground mb-4">
+                        {event.event_date && (
+                          <div className="flex items-center">
+                            <Calendar className="h-4 w-4 text-primary mr-2" />
+                            <span>{formatDate(event.event_date)}</span>
+                          </div>
+                        )}
+                        {event.event_time && (
+                          <div className="flex items-center">
+                            <Clock className="h-4 w-4 text-primary mr-2" />
+                            <span>{event.event_time}</span>
+                          </div>
+                        )}
+                        {event.location && (
+                          <div className="flex items-center">
+                            <MapPin className="h-4 w-4 text-primary mr-2" />
+                            <span className="line-clamp-1">{event.location}</span>
+                          </div>
+                        )}
+                      </div>
+                      {event.registration_link ? (
+                        <Button className="w-full" asChild>
+                          <a href={event.registration_link} target="_blank" rel="noopener noreferrer">
+                            Daftar Sekarang
+                            <ExternalLink className="ml-2 h-4 w-4" />
+                          </a>
+                        </Button>
+                      ) : (
+                        <Button className="w-full" variant="outline" asChild>
+                          <Link to="/contact">
+                            Hubungi Kami
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </Link>
+                        </Button>
+                      )}
+                    </CardContent>
                   </Card>
                 ))}
               </div>
@@ -182,29 +150,25 @@ const Events = () => {
           </TabsContent>
 
           {/* Past Events */}
-          <TabsContent value="past" className="space-y-8">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-foreground mb-4">Event yang Telah Selesai</h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Lihat dampak dan pencapaian dari event-event yang telah kami selenggarakan
-              </p>
-            </div>
-
+          <TabsContent value="past" className="space-y-6">
             {pastEvents.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {pastEvents.map((event) => (
                   <Card key={event.id} className="border-0 shadow-soft">
-                    <CardHeader>
-                      <div className="flex items-center justify-between mb-2">
-                        <Badge variant="outline" className="text-muted border-muted">
-                          Selesai
-                        </Badge>
+                    {event.image_url && (
+                      <div className="aspect-video overflow-hidden rounded-t-lg">
+                        <img src={event.image_url} alt={event.title} className="w-full h-full object-cover opacity-75" />
                       </div>
-                      <CardTitle className="text-xl line-clamp-2">{event.title}</CardTitle>
+                    )}
+                    <CardHeader className="pb-3">
+                      <Badge variant="outline" className="text-muted border-muted w-fit mb-2">
+                        Selesai
+                      </Badge>
+                      <CardTitle className="text-lg line-clamp-2">{event.title}</CardTitle>
                       <CardDescription className="line-clamp-2">{event.description}</CardDescription>
                     </CardHeader>
-                    <CardContent>
-                      <div className="space-y-3 text-sm text-muted-foreground mb-4">
+                    <CardContent className="pt-0">
+                      <div className="space-y-2 text-sm text-muted-foreground">
                         {event.event_date && (
                           <div className="flex items-center">
                             <Calendar className="h-4 w-4 mr-2" />
@@ -214,13 +178,7 @@ const Events = () => {
                         {event.location && (
                           <div className="flex items-center">
                             <MapPin className="h-4 w-4 mr-2" />
-                            {event.location}
-                          </div>
-                        )}
-                        {event.current_participants && (
-                          <div className="flex items-center">
-                            <Users className="h-4 w-4 mr-2" />
-                            {event.current_participants} peserta
+                            <span className="line-clamp-1">{event.location}</span>
                           </div>
                         )}
                       </div>
@@ -239,47 +197,22 @@ const Events = () => {
           </TabsContent>
         </Tabs>
       </section>
-
-      {/* Event Registration CTA */}
-      <section className="mb-16">
-        <Card className="border-0 shadow-soft bg-light-gray">
-          <CardContent className="p-12 text-center">
-            <h2 className="text-3xl font-bold text-foreground mb-4">
-              Ingin Mengikuti Event Kami?
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Bergabunglah dengan ribuan orang yang telah merasakan manfaat dari program-program kami. Daftarkan diri Anda sekarang!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="outline" size="lg" asChild>
-                <Link to="/contact">
-                  Hubungi Kami
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Call to Action */}
-      <section className="text-center">
+      {/* CTA */}
+      <section>
         <Card className="border-0 shadow-soft bg-primary text-primary-foreground">
-          <CardContent className="p-12">
-            <h2 className="text-3xl font-bold mb-4">
-              Mari Berpartisipasi Aktif
+          <CardContent className="p-8 text-center">
+            <h2 className="text-2xl font-bold mb-3">
+              Dukung Program Kami
             </h2>
-            <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-              Setiap kehadiran Anda dalam event kami adalah kontribusi nyata untuk membangun Indonesia yang lebih baik
+            <p className="text-base mb-6 opacity-90 max-w-xl mx-auto">
+              Setiap kontribusi Anda membantu kami menyelenggarakan lebih banyak kegiatan untuk masyarakat
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="outline" className="bg-white text-primary hover:bg-white/90" asChild>
-                <Link to="/donate">
-                  <Heart className="mr-2 h-5 w-5" />
-                  Donasi Sekarang
-                </Link>
-              </Button>
-            </div>
+            <Button size="lg" variant="outline" className="bg-white text-primary hover:bg-white/90" asChild>
+              <Link to="/donate">
+                <Heart className="mr-2 h-5 w-5" />
+                Donasi Sekarang
+              </Link>
+            </Button>
           </CardContent>
         </Card>
       </section>
