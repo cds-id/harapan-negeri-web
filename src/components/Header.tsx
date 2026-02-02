@@ -91,12 +91,9 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
-              <div className="pt-4 space-y-2">
-                <Button variant="outline" size="sm" className="w-full" asChild>
-                  <Link to="/get-involved">Menjadi Relawan</Link>
-                </Button>
+              <div className="pt-4">
                 <Button size="sm" className="w-full" asChild>
-                  <Link to="/get-involved">Donasi Sekarang</Link>
+                  <Link to="/donate">Donasi Sekarang</Link>
                 </Button>
               </div>
             </div>
