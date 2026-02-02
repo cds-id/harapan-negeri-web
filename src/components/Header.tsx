@@ -25,10 +25,11 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo - More Compact */}
           <Link to="/" className="flex items-center gap-2 group">
-            <img src="/logo-site.png" alt="YHBN" className="h-9 w-9 object-contain" />
-            <span className="hidden sm:block text-sm font-semibold text-foreground leading-tight">
-              Yayasan Harapan Bagimu Negeri
-            </span>
+            <img src="/logo-site.png" alt="YHBN" className="h-12 w-12 object-contain" />
+            <div className="hidden sm:block">
+              <h1 className="text-sm font-bold text-foreground leading-tight">YHBN</h1>
+              <p className="text-xs text-muted-foreground">Yayasan Harapan Bagimu Negeri</p>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
