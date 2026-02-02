@@ -31,7 +31,12 @@ export interface Donation {
   is_anonymous: boolean | null;
   payment_status: string | null;
   payment_method: string | null;
+  proof_image_url: string | null;
+  verified_at: string | null;
+  verified_by: string | null;
+  admin_notes: string | null;
   created_at: string;
+  campaigns?: { title: string } | null;
 }
 
 // Fetch active campaigns for public
@@ -204,6 +209,7 @@ export function useCreateDonation() {
         message: donationData.message,
         is_anonymous: donationData.is_anonymous,
         payment_method: donationData.payment_method,
+        proof_image_url: donationData.proof_image_url,
       };
       const { data, error } = await supabase
         .from('donations')
@@ -217,6 +223,44 @@ export function useCreateDonation() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-donations'] });
       queryClient.invalidateQueries({ queryKey: ['public-campaigns'] });
+    },
+  });
+}
+
+// Update donation (admin approval)
+export function useUpdateDonation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ id, ...donationData }: Partial<Donation> & { id: string }) => {
+      const { data, error } = await supabase
+        .from('donations')
+        .update(donationData)
+        .eq('id', id)
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-donations'] });
+      queryClient.invalidateQueries({ queryKey: ['public-campaigns'] });
+    },
+  });
+}
+
+// Delete donation (admin)
+export function useDeleteDonation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from('donations').delete().eq('id', id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-donations'] });
     },
   });
 }

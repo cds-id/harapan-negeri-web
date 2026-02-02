@@ -106,6 +106,7 @@ export type Database = {
       }
       donations: {
         Row: {
+          admin_notes: string | null
           amount: number
           campaign_id: string | null
           created_at: string
@@ -117,8 +118,12 @@ export type Database = {
           message: string | null
           payment_method: string | null
           payment_status: string | null
+          proof_image_url: string | null
+          verified_at: string | null
+          verified_by: string | null
         }
         Insert: {
+          admin_notes?: string | null
           amount: number
           campaign_id?: string | null
           created_at?: string
@@ -130,8 +135,12 @@ export type Database = {
           message?: string | null
           payment_method?: string | null
           payment_status?: string | null
+          proof_image_url?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
         }
         Update: {
+          admin_notes?: string | null
           amount?: number
           campaign_id?: string | null
           created_at?: string
@@ -143,6 +152,9 @@ export type Database = {
           message?: string | null
           payment_method?: string | null
           payment_status?: string | null
+          proof_image_url?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
         }
         Relationships: [
           {

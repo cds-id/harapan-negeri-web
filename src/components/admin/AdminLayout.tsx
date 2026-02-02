@@ -27,6 +27,7 @@ import {
   Home,
   Mail,
   Quote,
+  CreditCard,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -40,6 +41,7 @@ const menuItems = [
   { icon: FolderKanban, label: 'Program', path: '/admin/programs' },
   { icon: Calendar, label: 'Event', path: '/admin/events' },
   { icon: Heart, label: 'Kampanye Donasi', path: '/admin/campaigns' },
+  { icon: CreditCard, label: 'Donasi Masuk', path: '/admin/donations' },
   { icon: Image, label: 'Galeri', path: '/admin/gallery' },
   { icon: Users, label: 'Partner', path: '/admin/partners' },
   { icon: Quote, label: 'Testimoni', path: '/admin/testimonials' },

@@ -26,6 +26,7 @@ import AdminNews from "./pages/admin/AdminNews";
 import AdminPrograms from "./pages/admin/AdminPrograms";
 import AdminEvents from "./pages/admin/AdminEvents";
 import AdminCampaigns from "./pages/admin/AdminCampaigns";
+import AdminDonations from "./pages/admin/AdminDonations";
 import AdminGallery from "./pages/admin/AdminGallery";
 import AdminPartners from "./pages/admin/AdminPartners";
 import AdminTestimonials from "./pages/admin/AdminTestimonials";
@@ -54,7 +55,14 @@ const App = () => (
                 <Route path="/get-involved" element={<Layout><GetInvolved /></Layout>} />
                 <Route path="/news" element={<Layout><News /></Layout>} />
                 <Route path="/contact" element={<Layout><Contact /></Layout>} />
-
+                <Route
+                  path="/admin/donations"
+                  element={
+                    <ProtectedRoute>
+                      <AdminLayout><AdminDonations /></AdminLayout>
+                    </ProtectedRoute>
+                  }
+                />
                 {/* Admin Routes */}
                 <Route path="/admin/login" element={<AdminLogin />} />
                 <Route
