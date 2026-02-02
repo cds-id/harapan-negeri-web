@@ -147,20 +147,19 @@ const DonationConfirmForm = ({ onSuccess }: DonationConfirmFormProps) => {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Campaign Selection */}
           <div className="space-y-2">
             <Label htmlFor="campaign">Kampanye (Opsional)</Label>
             <Select
               value={formData.campaign_id}
               onValueChange={(value) =>
-                setFormData((prev) => ({ ...prev, campaign_id: value }))
+                setFormData((prev) => ({ ...prev, campaign_id: value === 'general' ? '' : value }))
               }
             >
               <SelectTrigger>
                 <SelectValue placeholder="Pilih kampanye atau donasi umum" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Donasi Umum</SelectItem>
+                <SelectItem value="general">Donasi Umum</SelectItem>
                 {campaigns?.map((campaign) => (
                   <SelectItem key={campaign.id} value={campaign.id}>
                     {campaign.title}
