@@ -24,14 +24,11 @@ const Header = () => {
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo - More Compact */}
-          <Link to="/" className="flex items-center space-x-2 group">
-            <img src="/logo-site.png" alt="YHBN" className="h-10 w-10 object-contain" />
-            <div className="hidden sm:block">
-              <h1 className="text-base font-bold text-foreground leading-tight">
-                YHBN
-              </h1>
-              <p className="text-xs text-muted-foreground hidden md:block">Yayasan Harapan Bagimu Negeri</p>
-            </div>
+          <Link to="/" className="flex items-center gap-2 group">
+            <img src="/logo-site.png" alt="YHBN" className="h-9 w-9 object-contain" />
+            <span className="hidden sm:block text-sm font-semibold text-foreground leading-tight">
+              Yayasan Harapan Bagimu Negeri
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
