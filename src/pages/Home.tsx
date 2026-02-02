@@ -67,12 +67,6 @@ const Home = () => {
                     <Heart className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button variant="outline" size="lg" className="text-lg px-8 py-6" asChild>
-                  <Link to="/get-involved">
-                    Menjadi Relawan
-                    <Users className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
               </div>
             </div>
 

@@ -26,7 +26,7 @@ const RouteLoader: React.FC<RouteLoaderProps> = ({
       '/programs': 'Program',
       '/events': 'Kegiatan',
       '/news': 'Berita',
-      '/get-involved': 'Bergabung',
+      
       '/contact': 'Kontak',
       '/donate': 'Donasi',
     };
