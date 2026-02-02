@@ -29,16 +29,24 @@ export interface News {
   news_categories?: NewsCategory | null;
 }
 
-// Fetch published news for public
-export function usePublicNews(limit?: number) {
+// Fetch published news for public with optional category filter
+export function usePublicNews(options?: { categoryId?: string | null; limit?: number } | number) {
+  // Handle legacy usage: usePublicNews(3) for limit only
+  const categoryId = typeof options === 'object' ? options?.categoryId : undefined;
+  const limit = typeof options === 'number' ? options : (typeof options === 'object' ? options?.limit : undefined);
+
   return useQuery({
-    queryKey: ['public-news', limit],
+    queryKey: ['public-news', categoryId, limit],
     queryFn: async () => {
       let query = supabase
         .from('news')
         .select('*, news_categories(*)')
         .eq('is_published', true)
         .order('published_at', { ascending: false });
+
+      if (categoryId) {
+        query = query.eq('category_id', categoryId);
+      }
 
       if (limit) {
         query = query.limit(limit);
@@ -47,6 +55,30 @@ export function usePublicNews(limit?: number) {
       const { data, error } = await query;
       if (error) throw error;
       return data as News[];
+    },
+  });
+}
+
+// Get count of news per category
+export function useNewsCategoryCounts() {
+  return useQuery({
+    queryKey: ['news-category-counts'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('news')
+        .select('category_id')
+        .eq('is_published', true);
+
+      if (error) throw error;
+
+      // Count news per category
+      const counts: Record<string, number> = {};
+      data.forEach((news) => {
+        if (news.category_id) {
+          counts[news.category_id] = (counts[news.category_id] || 0) + 1;
+        }
+      });
+      return counts;
     },
   });
 }
