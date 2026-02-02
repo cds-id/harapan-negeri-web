@@ -16,12 +16,6 @@ const Events = () => {
   const today = new Date().toISOString().split('T')[0];
   const pastEvents = allEvents?.filter(event => event.event_date && event.event_date < today) || [];
 
-  const eventStats = [
-    { number: allEvents?.length?.toString() || "0", label: "Total Event", icon: Calendar },
-    { number: upcomingEvents?.length?.toString() || "0", label: "Event Mendatang", icon: Star },
-    { number: pastEvents.length.toString(), label: "Event Selesai", icon: CheckCircle },
-    { number: "15", label: "Kota Jangkauan", icon: MapPin }
-  ];
 
   const getStatusColor = (eventDate: string | null) => {
     if (!eventDate) return "text-muted border-muted";
@@ -68,25 +62,6 @@ const Events = () => {
         </Badge>
       </div>
 
-      {/* Event Stats */}
-      <section className="mb-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {eventStats.map((stat, index) => {
-            const Icon = stat.icon;
-            return (
-              <Card key={index} className="border-0 shadow-soft text-center">
-                <CardContent className="pt-6">
-                  <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Icon className="h-8 w-8 text-primary-foreground" />
-                  </div>
-                  <h3 className="text-3xl font-bold text-primary mb-2">{stat.number}</h3>
-                  <p className="text-muted-foreground font-medium">{stat.label}</p>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-      </section>
 
       {/* Events Tabs */}
       <section className="mb-16">
