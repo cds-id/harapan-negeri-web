@@ -19,15 +19,6 @@ const iconMap: Record<string, React.ElementType> = {
 const Programs = () => {
   const { data: programs, isLoading } = usePublicPrograms();
 
-  // Calculate total stats
-  const totalBeneficiaries = programs?.reduce((sum, p) => sum + (p.beneficiaries || 0), 0) || 0;
-
-  const achievements = [
-    { number: programs?.length?.toString() || "0", label: "Program Aktif", icon: Heart },
-    { number: totalBeneficiaries.toLocaleString('id-ID'), label: "Total Penerima Manfaat", icon: Users },
-    { number: "25", label: "Desa Binaan", icon: MapPin },
-    { number: "15", label: "Kota/Kabupaten", icon: Home }
-  ];
 
   if (isLoading) {
     return (
@@ -58,25 +49,6 @@ const Programs = () => {
           </Badge>
         </div>
 
-        {/* Achievements Stats */}
-        <section className="mb-16">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {achievements.map((achievement, index) => {
-              const Icon = achievement.icon;
-              return (
-                <Card key={index} className="border-0 shadow-soft text-center">
-                  <CardContent className="pt-6">
-                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Icon className="h-8 w-8 text-primary-foreground" />
-                    </div>
-                    <h3 className="text-3xl font-bold text-primary mb-2">{achievement.number}</h3>
-                    <p className="text-muted-foreground font-medium">{achievement.label}</p>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </section>
 
         {/* Main Programs */}
         <section className="mb-16">
@@ -109,12 +81,6 @@ const Programs = () => {
                                   <Badge variant="outline" className="text-success border-success">
                                     Aktif
                                   </Badge>
-                                  {program.beneficiaries && program.beneficiaries > 0 && (
-                                    <div className="flex items-center text-sm text-muted-foreground">
-                                      <Users className="h-4 w-4 mr-1" />
-                                      {program.beneficiaries.toLocaleString('id-ID')} Penerima Manfaat
-                                    </div>
-                                  )}
                                 </div>
                               </div>
                             </div>

@@ -36,15 +36,6 @@ const Home = () => {
     { image: heroImage, alt: "Pelatihan keterampilan untuk masa depan" }
   ];
 
-  // Calculate total beneficiaries from programs
-  const totalBeneficiaries = programs?.reduce((sum, p) => sum + (p.beneficiaries || 0), 0) || 0;
-
-  const stats = [
-    { number: totalBeneficiaries.toLocaleString('id-ID'), label: "Anak & Keluarga Terbantu", icon: Heart },
-    { number: programs?.length?.toString() || "0", label: "Program Aktif", icon: Target },
-    { number: "450+", label: "Donatur & Relawan", icon: Users },
-  ];
-
   return (
     <div className="space-y-0">
       {/* Hero Section */}
@@ -109,36 +100,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Impact Statistics */}
-      <section className="py-16 bg-light-gray">
-        <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Dampak Nyata Bersama
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Pencapaian yang telah kami raih bersama masyarakat Indonesia
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {stats.map((stat, index) => {
-              const Icon = stat.icon;
-              return (
-                <Card key={index} className="text-center border-0 shadow-soft hover:shadow-medium transition-shadow">
-                  <CardContent className="pt-8 pb-6">
-                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Icon className="h-8 w-8 text-primary-foreground" />
-                    </div>
-                    <h3 className="text-4xl font-bold text-primary mb-2">{stat.number}</h3>
-                    <p className="text-lg text-foreground font-medium">{stat.label}</p>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      </section>
 
       {/* Featured Programs */}
       <section className="py-16">
@@ -173,11 +134,6 @@ const Home = () => {
                       <CardDescription className="text-center">
                         {program.description}
                       </CardDescription>
-                      {program.beneficiaries && program.beneficiaries > 0 && (
-                        <p className="text-center text-sm text-primary font-medium mt-4">
-                          {program.beneficiaries.toLocaleString('id-ID')} penerima manfaat
-                        </p>
-                      )}
                     </CardContent>
                   </Card>
                 );

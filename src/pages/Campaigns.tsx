@@ -113,12 +113,6 @@ const Campaigns = () => {
     }
   ];
 
-  const campaignStats = [
-    { number: "15", label: "Kampanye Aktif", icon: Target },
-    { number: "5,200+", label: "Total Donatur", icon: Users },
-    { number: "2.8M", label: "Dana Terkumpul", icon: TrendingUp },
-    { number: "98%", label: "Target Tercapai", icon: CheckCircle }
-  ];
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('id-ID', {
@@ -159,25 +153,6 @@ const Campaigns = () => {
         </Badge>
       </div>
 
-        {/* Campaign Stats */}
-        <section className="mb-16">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {campaignStats.map((stat, index) => {
-              const Icon = stat.icon;
-              return (
-                <Card key={index} className="border-0 shadow-soft text-center">
-                  <CardContent className="pt-6">
-                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Icon className="h-8 w-8 text-primary-foreground" />
-                    </div>
-                    <h3 className="text-3xl font-bold text-primary mb-2">{stat.number}</h3>
-                    <p className="text-muted-foreground font-medium">{stat.label}</p>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </section>
 
         {/* Campaign Tabs */}
         <section className="mb-16">
