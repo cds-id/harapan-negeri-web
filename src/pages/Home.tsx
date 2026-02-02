@@ -55,21 +55,21 @@ const Home = () => {
 
   const news = [
     {
-      title: "Bakti Sosial Ramadan 2024",
+      title: "Bakti Sosial Ramadan 2026",
       excerpt: "Distribusi 500 paket sembako kepada keluarga kurang mampu di Jakarta Pusat",
-      date: "15 Maret 2024",
+      date: "15 Maret 2026",
       location: "Jakarta Pusat"
     },
     {
       title: "Pelatihan Digital Marketing",
       excerpt: "50 peserta mengikuti pelatihan digital marketing gratis untuk UMKM",
-      date: "10 Maret 2024",
+      date: "10 Maret 2026",
       location: "Bogor"
     },
     {
       title: "Beasiswa 25 Anak Berprestasi",
       excerpt: "Pemberian beasiswa pendidikan untuk 25 anak berprestasi dari keluarga kurang mampu",
-      date: "5 Maret 2024",
+      date: "5 Maret 2026",
       location: "Bandung"
     },
   ];

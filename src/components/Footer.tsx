@@ -112,7 +112,7 @@ const Footer = () => {
 
         <div className="border-t border-secondary-foreground/20 mt-8 pt-8 text-center">
           <p className="text-sm text-secondary-foreground/60">
-            © 2024 Yayasan Harapan Bagimu Negeri. Semua hak dilindungi.
+            © 2026 Yayasan Harapan Bagimu Negeri. Semua hak dilindungi.
           </p>
         </div>
       </div>

@@ -70,19 +70,19 @@ const Programs = () => {
     {
       title: "Program Literasi Digital",
       description: "Pelatihan literasi digital untuk masyarakat pedesaan",
-      launchDate: "Q2 2024",
+      launchDate: "Q2 2026",
       targetBeneficiaries: "200 Peserta"
     },
     {
       title: "Rumah Baca Komunitas",
       description: "Pembangunan perpustakaan mini di desa-desa terpencil",
-      launchDate: "Q3 2024",
+      launchDate: "Q3 2026",
       targetBeneficiaries: "10 Desa"
     },
     {
       title: "Program Lingkungan Hijau",
       description: "Penanaman pohon dan edukasi lingkungan",
-      launchDate: "Q4 2024",
+      launchDate: "Q4 2026",
       targetBeneficiaries: "5,000 Pohon"
     }
   ];
