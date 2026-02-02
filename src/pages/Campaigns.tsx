@@ -11,7 +11,7 @@ const Campaigns = () => {
   const activeCampaigns = [
     {
       id: 1,
-      title: "Beasiswa Anak Yatim Piatu 2024",
+      title: "Beasiswa Anak Yatim Piatu 2026",
       description: "Mari bersama-sama memberikan kesempatan pendidikan terbaik untuk 100 anak yatim piatu di seluruh Indonesia",
       category: "Pendidikan",
       target: 500000000,
@@ -86,7 +86,7 @@ const Campaigns = () => {
       raised: 320000000,
       progress: 107,
       donors: 2100,
-      completedDate: "Februari 2024",
+      completedDate: "Januari 2026",
       impact: "1,500 keluarga terbantu"
     },
     {
@@ -97,7 +97,7 @@ const Campaigns = () => {
       raised: 415000000,
       progress: 104,
       donors: 1800,
-      completedDate: "Januari 2024",
+      completedDate: "Desember 2025",
       impact: "5 sekolah direnovasi, 800 siswa terbantu"
     },
     {
@@ -108,7 +108,7 @@ const Campaigns = () => {
       raised: 185000000,
       progress: 103,
       donors: 950,
-      completedDate: "Desember 2023",
+      completedDate: "November 2025",
       impact: "300 balita mendapat gizi seimbang"
     }
   ];
